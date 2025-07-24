@@ -18,7 +18,7 @@ def spawn_onKeyPress(app, key):
         # Generate goalmoney, starting money, number of "years" they have 
         app.moneyGoal = random.randint(10, 100)
         app.money = random.randint(int(app.moneyGoal * 0.2), int(app.moneyGoal * 0.5))
-        app.time = random.randint(45, 70) #based on life expectancy/working years of Americans 
+        app.time = random.randint(5, 10) #TWEAK TO BE based on life expectancy/working years of Americans 
 
         # Update player info
         app.player.name = app.name

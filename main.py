@@ -6,9 +6,19 @@ from player import Player
 from spawn import *
 from info import *
 from decision import *
+
+#HAMSTER IMPORTS 
 from hamster import *
+from run import *
+
+#GAMBLING IMPORTS
 from gambling import *
+
+#INVESTMENT IMPORTS
 from investment import *
+
+#OTHER
+from end import *
 
 
 #---Start Screen--------------------------------------------------------------------------------------
@@ -24,6 +34,9 @@ def start_onScreenActivate(app):
     app.time = 0
     app.player = Player(app.name, app.money, app.moneyGoals, app.time)
     print(app.player) 
+
+    #tracking number of decisions made 
+    app.currDec = 0  
 
 def start_redrawAll(app):
     drawLabel("Baby 2 Billionaire", app.width/2, app.height/2, size=40, bold=True)
