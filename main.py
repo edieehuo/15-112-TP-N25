@@ -1,9 +1,9 @@
 #---Baby 2 Billionaire Game--------------------------------------------------------------------------------------
+#--- Imports--------------------------------------------------------------------------------------
 import sys
 from cmu_graphics import *
 from spawn import *
 from decision import *
-print(decision_redrawAll)
 from player import *
 from hamster import *
 from gambling import *
@@ -21,7 +21,7 @@ def start_redrawAll(app):
 def start_onKeyPress(app, key):
     setActiveScreen('spawn')
 
-#---Don't Touch This Part --------------------------------------------------------------------------------------
+#---Don't Touch This Part -----------------------------------------------------------------------------------
 def main():
     runAppWithScreens(initialScreen='start')
 main()
