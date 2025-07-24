@@ -1,30 +1,36 @@
 import sys
 from cmu_graphics import *
+from tracker import *  
 
 #---Decision Screen--------------------------------------------------------------------------------------
 def decision_onScreenActivate(app):
     pass
 
 def decision_redrawAll(app):
-    drawLabel(f" Time For {app.name} To Make A Choice...  ", app.width/2, app.height/2-100, size=40, bold=True)
+    drawLabel("Decision Screen", app.width/2, 10, size=40, bold=True)
+
+    drawLabel(f" Choose Carefully...  ", app.width/2, app.height/2-100, size=40, bold=True)
+    tracker_redrawAll(app)  # Assuming tracker_redrawAll is defined elsewhere
     drawLabel("Press H for Hamster Wheel", app.width/2, app.height/2 - 50)
     drawLabel("Press G for Gambling", app.width/2, app.height/2)
     drawLabel("Press I for Investment", app.width/2, app.height/2 + 50)
 
-def decision_onKeyPress(app, key):
-    app.currDec += 1  # Decrease time by 1 for each decision made
+def decision_onKeyPress(app, key): 
     print(f'{app.currDec}, {app.time}')  # Debug: check time remaining
     if app.currDec == app.time:
         setActiveScreen('end') # If time runs out, go to end screen
         return #this doesn't let u keep on going 
-    
     if key == 'h':
+        app.currDec += 1
         setActiveScreen('hamster')
+        return 
     elif key == 'g':
+        app.currDec += 1
         setActiveScreen('gambling')
+        return 
     elif key == 'i':
+        app.currDec += 1
         setActiveScreen('investment')
-    if key == 'left':
-        pass
+        return 
     else:
         pass # Ignore other keys

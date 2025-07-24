@@ -7,6 +7,8 @@ def run_onScreenActivate(app):
     pass
 
 def run_redrawAll(app):
+    drawLabel("Run Screen", app.width/2, 10, size=40, bold=True)
+
     drawLabel("Running On Hamster Wheel", app.width/2, 10, size=40, bold=True)
     drawLabel("Press Space to Return To Decisions", app.width/2, app.height/2)
 

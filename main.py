@@ -22,14 +22,16 @@ from stocks import *
 from deposits import *
 
 #OTHER
+from tracker import *
 from end import *
 
 
 #---Start Screen--------------------------------------------------------------------------------------
 def start_onScreenActivate(app):
-    #app set up 
+    #app set up
     app.width = 800 
-    app.height = 600  
+    app.height = 600   
+    app.border = 20
 
     #player set up 
     app.name= ''
