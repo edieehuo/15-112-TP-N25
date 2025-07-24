@@ -13,9 +13,13 @@ from run import *
 
 #GAMBLING IMPORTS
 from gambling import *
+from numbersGame import *
+from lottery import *
 
 #INVESTMENT IMPORTS
 from investment import *
+from stocks import *
+from deposits import *
 
 #OTHER
 from end import *
