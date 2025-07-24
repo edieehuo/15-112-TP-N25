@@ -1,5 +1,6 @@
 import sys
 from cmu_graphics import *
+
 class Player:
     def __init__(self, name, age, money, moneyGoal):
         self.name = name

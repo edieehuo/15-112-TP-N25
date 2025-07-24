@@ -3,6 +3,7 @@
 import sys
 from cmu_graphics import *
 from spawn import *
+from info import *
 from decision import *
 from player import *
 from hamster import *
