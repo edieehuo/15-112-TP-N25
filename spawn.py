@@ -8,8 +8,7 @@ def spawn_onScreenActivate(app):
     pass 
 
 def spawn_redrawAll(app):
-    drawLabel("Spawning Screen", app.width/2, app.height/2, size=40, bold=True)
-    
+    drawLabel("Spawning Screen", app.width/2, 10, size=40, bold=True)
     drawLabel("Enter your name:", app.width/2, app.height/2 - 50)
     drawLabel(app.name, app.width/2, app.height/2 + 50, size=30)
     drawLabel("Press 'Enter' to Continue", app.width/2, app.height/2 + 100)
