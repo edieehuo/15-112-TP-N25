@@ -45,7 +45,7 @@ def start_onScreenActivate(app):
 
     #tracking number of decisions made 
     app.currDec = 0  
-
+    
 def start_redrawAll(app):
     drawLabel("Baby 2 Billionaire", app.width/2, app.height/2, size=40, bold=True)
     drawLabel("Press any key to start", app.width/2, app.height/2 + 50)

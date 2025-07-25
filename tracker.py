@@ -20,7 +20,9 @@ def tracker_redrawAll(app):
     drawLabel(f"Player: {app.player.name}", x, y, size=15, align='left')
     drawLabel(f"Savings: ${app.player.money},000", x, y + lineHeight, size=15, align='left')
     drawLabel(f"Goal: ${app.player.moneyGoals},000", x, y + 2 * lineHeight, size=15, align='left')
-    drawLabel(f"Years Left: {app.time - app.currDec}", x, y + 3 * lineHeight, size=15, align='left')
+
+    #Steps Left 
+    drawStepsLeft(app)
 
     # Percentage bar
     drawPercentage(app, x, y + 5 * lineHeight)
@@ -59,6 +61,12 @@ def drawPercentage(app, barX, barY):
         # Still working toward goal
         drawLabel(f"-${moneyMsg},000", barX, labelY,
                 fill='red', align='left', size=15)
+
+def drawStepsLeft(app):
+    stepsLeft = app.time - app.currDec
+    color = 'red' if stepsLeft == 0 else 'black'
+    drawLabel(f"Steps Left: {stepsLeft} ", app.left + app.border, app.top + 100, 
+              size=15, align = 'left', fill=color)
 
 
 
