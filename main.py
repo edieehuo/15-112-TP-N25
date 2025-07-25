@@ -41,6 +41,7 @@ def start_onScreenActivate(app):
     app.moneyGoals = 0
     app.time = 0
     app.player = Player(app.name, app.money, app.moneyGoals, app.time)
+    app.log = []  # Initialize the activity log
     print(app.player) 
 
     #tracking number of decisions made 

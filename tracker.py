@@ -28,7 +28,7 @@ def tracker_redrawAll(app):
     drawPercentage(app, x, y + 5 * lineHeight)
 
     # Draw activity log
-    # drawActivityLog(app)
+    drawActivityLog(app)
 
 def drawPercentage(app, barX, barY):
     barWidth = 150
@@ -72,16 +72,8 @@ def drawStepsLeft(app):
 
 #----------- ACTIVITY LOG CODE TO WORK ON ---------------------------------------
 
-# def drawActivityLog(app):
-#     # Draw the activity log
-#     logX = 220
-#     logY = 0
-#     logWidth = app.width - logX
-#     logHeight = app.height
-
-#     drawRect(logX, logY, logWidth, logHeight, fill='lightgrey', border='black')
-
-#     # Draw the activity text
-#     activityText = f"Decisions Made: {app.currDec}"
-#     drawLabel(activityText, logX + 10, logY + 20, size=15, align='left')
-
+def drawActivityLog(app):
+    drawLabel("Activity Log:", app.left + app.border, app.top + 280, size=15, align='left', bold=True)
+    print(app.log)  # Debug: print log to console
+    for i, entry in enumerate(app.log):
+        drawLabel(f"{entry}", app.left + app.border, app.top + 300 + i * 20, size=15, align='left')
