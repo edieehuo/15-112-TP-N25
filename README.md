@@ -12,4 +12,4 @@ Bringing my own reality into the design, I explicitly modeled the three most com
 3. **Strategic Planning with Guaranteed ROIs** (like a CD at the bank), represented as the **Investment screen**.
 
 ## My Goal:
-I hope users take away experiential learning through direct observation of how core financial principles of compounding, risk management, and the time-value of money play out in decision consequences.
+I hope users take away some understanding of their own decision-making process through direct observation of how core financial principles of compounding, risk management, and the time-value of money directly play out in their in-game decision consequences.
