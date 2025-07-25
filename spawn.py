@@ -9,8 +9,17 @@ def spawn_onScreenActivate(app):
 
 def spawn_redrawAll(app):
     drawLabel("Spawning Screen", app.width/2, 10, size=40, bold=True)
-    drawLabel("Enter your name:", app.width/2, app.height/2 - 50)
-    drawLabel(app.name, app.width/2, app.height/2 + 50, size=30)
+    drawLabel("Enter Player Name:", app.width/2, app.height/2 - 50)
+    drawLabel(app.name, app.width/2, app.height/2, size=50, bold = True)
+    
+    nameLength = len(app.name)
+    charWidth = 30  #width of char
+    lineWidth = nameLength * charWidth 
+
+    drawLine(app.width/2 - lineWidth/2, app.height/2 + 50,
+            app.width/2 + lineWidth/2, app.height/2 + 50,
+            fill='black')
+    
     drawLabel("Press 'Enter' to Continue", app.width/2, app.height/2 + 100)
 
 def spawn_onKeyPress(app, key):

@@ -7,7 +7,6 @@ def numbersGame_onScreenActivate(app):
 
 def numbersGame_redrawAll(app):
     drawLabel("NumbersGame Screen", app.width/2, 10, size=40, bold=True)
-
     drawLabel("Press 1 to Guess a Number", app.width/2, app.height/2 - 50)
     drawLabel("Press 2 to Check Your Guess", app.width/2, app.height/2)
 
