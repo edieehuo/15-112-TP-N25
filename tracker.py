@@ -39,7 +39,30 @@ def drawPercentage(app, barX, barY):
     drawRect(barX, barY, barWidth * percent, barHeight, fill='green', align = 'left', border = 'black')
 
     # Label below bar
-    drawLabel(f"${app.player.money},000 / ${app.player.moneyGoals},000", barX, barY + barHeight + 20, align='left', size=15)
+    drawLabel(f"{int(percent * 100)}% Made", barX, barY + barHeight + 20, align='left', size=15, bold = True)
+    drawLabel(f"${app.player.money},000 / ${app.player.moneyGoals},000", barX, barY + barHeight + 40, align='left', size=15)
+    # Label for money left to go
+    moneyLeftToGo = app.player.moneyGoals - app.player.money
+    moneyMsg = abs(moneyLeftToGo)
+
+    labelY = barY + barHeight + 60
+
+    if moneyLeftToGo < 0:
+        # Goal exceeded
+        drawLabel(f"+${moneyMsg},000", barX, labelY,
+                fill='green', align='left', size=15)
+    elif moneyLeftToGo == 0:
+        # Goal achieved
+        drawLabel(f"Goal Achieved!", barX, labelY,
+                fill='yellow', align='left', size=15)
+    else:
+        # Still working toward goal
+        drawLabel(f"-${moneyMsg},000", barX, labelY,
+                fill='red', align='left', size=15)
+
+
+
+#----------- ACTIVITY LOG CODE TO WORK ON ---------------------------------------
 
 # def drawActivityLog(app):
 #     # Draw the activity log

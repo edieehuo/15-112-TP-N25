@@ -20,10 +20,10 @@ def spawn_redrawAll(app):
             app.width/2 + lineWidth/2, app.height/2 + 50,
             fill='black')
     
-    drawLabel("Press 'Enter' to Continue", app.width/2, app.height/2 + 100)
+    drawLabel("Press 'Space' or 'Enter' to Continue", app.width/2, app.height/2 + 100)
 
 def spawn_onKeyPress(app, key):
-    if key == 'enter':
+    if key == 'enter' or key == 'space':
         # Generate goalmoney, starting money, number of "years" they have 
         app.moneyGoals = random.randint(10, 100)
         app.money = random.randint(int(app.moneyGoals * 0.2), int(app.moneyGoals * 0.5))
