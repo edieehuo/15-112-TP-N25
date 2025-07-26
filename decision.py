@@ -22,17 +22,17 @@ def decision_onKeyPress(app, key):
         return #this doesn't let u keep on going 
     if key == 'h':
         app.currDec += 1
-        app.log.append("+2,000 Hamster Wheel")
+        app.log.insert(0,"+2,000 Hamster Wheel")
         setActiveScreen('hamster')
         return 
     elif key == 'g':
         app.currDec += 1
-        app.log.append("Chose Gambling")
+        app.log.insert(0,"Chose Gambling")
         setActiveScreen('gambling')
         return 
     elif key == 'i':
         app.currDec += 1
-        app.log.append("Chose Investment")
+        app.log.insert(0,"Chose Investment")
         setActiveScreen('investment')
         return 
     else:
