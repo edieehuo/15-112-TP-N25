@@ -3,6 +3,8 @@ from cmu_graphics import *
 
 
 #---Hamster Wheel Screen--------------------------------------------------------------------------------------
+#INCORPORATE INFO ABOUT HAMSTER WHEEL AND HOW TO PLAY HAMSTER WHEEL 
+
 def hamster_onScreenActivate(app):
     app.hamsterMoneyAdd = 2
     pass 
@@ -14,9 +16,6 @@ def hamster_redrawAll(app):
 def hamster_onKeyPress(app, key):
     if key == 'r':
         setActiveScreen('run')
-    if key == 'space':
-        app.player.money += app.hamsterMoneyAdd # Increase money by 2 for each run
-        setActiveScreen('decision')
     else:
         pass  # Ignore other keys
 

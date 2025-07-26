@@ -14,6 +14,7 @@ def run_redrawAll(app):
 
 def run_onKeyPress(app, key):
     if key == 'space':
+        app.player.money += app.hamsterMoneyAdd # Increase money by 2 for each run
         setActiveScreen('decision')
     else:
         pass  # Ignore other keys
