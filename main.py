@@ -31,8 +31,8 @@ from end import *
 
 def start_onScreenActivate(app):
     #app set up
-    app.width = 800 
-    app.height = 600   
+    app.width = 1000 
+    app.height = 1000   
     app.border = 20
 
     #player set up 

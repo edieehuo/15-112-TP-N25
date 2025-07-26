@@ -16,7 +16,6 @@ def decision_redrawAll(app):
     drawLabel("Press I for Investment", app.width/2, app.height/2 + 50)
 
 def decision_onKeyPress(app, key): 
-    print(f'{app.currDec}, {app.time}')  # Debug: check time remaining
     if app.currDec == app.time:
         setActiveScreen('end') # If time runs out, go to end screen
         return #this doesn't let u keep on going 

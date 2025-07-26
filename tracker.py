@@ -77,6 +77,5 @@ def drawStepsLeft(app):
 def drawActivityLog(app):
     distFromTracker = 300
     drawLabel("Activity Log:", app.left + app.border, app.top + distFromTracker, size=15, align='left', bold=True)
-    print(app.log)  # Debug: print log to console
     for i, entry in enumerate(app.log):
         drawLabel(f"{entry}", app.left + app.border, app.top + distFromTracker + (i+1) * 20, size=15, align='left')

@@ -35,9 +35,6 @@ def spawn_onKeyPress(app, key):
         app.player.moneyGoals = app.moneyGoals
         app.player.time = app.time
 
-        # Debugging: print player info
-        print(app.player)  
-
         setActiveScreen('info')
     
     elif key == 'backspace':
