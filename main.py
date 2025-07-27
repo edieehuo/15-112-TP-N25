@@ -1,5 +1,7 @@
 #--- Baby 2 Billionaire --------------------------------------------------------------------------
-#--- Imports--------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
+#.....................................................................................................
+#--- IMPORTS--------------------------------------------------------------------------------------
 import sys
 from cmu_graphics import *
 from player import Player
@@ -34,6 +36,7 @@ def start_onScreenActivate(app):
     app.width = 1000 
     app.height = 1000   
     app.border = 20
+    app.screenName = 'start'
 
     #player set up 
     app.name= ''
@@ -45,8 +48,9 @@ def start_onScreenActivate(app):
     print(app.player) 
 
     #tracking number of decisions made 
-    app.currDec = 0  
-    
+    app.currDec = 0    
+
+
 def start_redrawAll(app):
     drawLabel("Baby 2 Billionaire", app.width/2, app.height/2, size=40, bold=True)
     drawLabel("Press any key to start", app.width/2, app.height/2 + 50)

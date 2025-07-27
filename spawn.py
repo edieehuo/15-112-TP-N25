@@ -4,6 +4,7 @@ import random
 
 #---Spawn Screen--------------------------------------------------------------------------------------
 def spawn_onScreenActivate(app):
+    app.screenName = 'spawn'
     app.name = ''  # Initialize name as an empty string
     pass 
 

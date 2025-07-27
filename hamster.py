@@ -6,6 +6,7 @@ from cmu_graphics import *
 #INCORPORATE INFO ABOUT HAMSTER WHEEL AND HOW TO PLAY HAMSTER WHEEL 
 
 def hamster_onScreenActivate(app):
+    app.screenName = 'hamster'
     app.hamsterMoneyAdd = 2
     pass 
 
