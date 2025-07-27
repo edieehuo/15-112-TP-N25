@@ -1,14 +1,10 @@
 from cmu_graphics import *
 from player import Player
-from spawn import *
 from info import *
-from decision import *
 
 #INVESTMENT IMPORTS
 from investment import *
 from stocks import *
-from sellStocks import *
-
 
 def buyStocks_onScreenActivate(app):
     app.buyStockNum = None  # Initialize as None, will wait for user input

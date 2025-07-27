@@ -3,7 +3,7 @@ print(f'in Sell Stocks on Screen Activate')
 
 from cmu_graphics import *
 from player import *
-from spawn import *
+# from spawn import *
 from info import *
 from decision import *
 
@@ -56,7 +56,7 @@ def sellStocks_redrawAll(app):
             drawLabel(f"Press C to Change Stock Selection", 
                       10, app.height / 2 + 150, size=20, align = 'left')
             drawLabel(f"Num To Sell: {app.sellAmount}",  
-                      app.width / 2, app.height / 2 + 180, size=20, align='center', fill = 'red')            
+                      app.width / 2, app.height / 2 + 180, size=20, align='center', fill = 'pink')            
             drawLabel(f"Press 's' to sell- be certain! ", 
                       app.width / 2, app.height / 2 + 200, size=20, align='center')
 
@@ -69,7 +69,11 @@ def sellStocks_onKeyPress(app, key):
     if app.sellStockNum is None:
         if key == 'c': 
             pass 
-
+    #TEST-------------------------------------------
+    if key == 'c':
+        app.sellStockNum = None 
+    
+    #------------------------------------------------
     if key.isdigit():   # Check if the key pressed is a digit (number)
         if app.sellStockNum is None:  # First step, selecting stock to sell
             stockInd = int(key) - 1  # Convert the index to zero-based
@@ -77,10 +81,10 @@ def sellStocks_onKeyPress(app, key):
                 app.sellStockNum = stockInd  # Store selected stock
             else:
                 pass 
-        elif app.sellStockNum is not None:
+        elif app.sellStockNum != None:
             app.sellAmount = int(key)
-            if key == 'c':
-                app.sellStockNum = None 
+            # if key == 'c':
+            #     app.sellStockNum = None 
             print(f'sellStocks.py onKeyPress: sellAmount: {app.sellAmount}')
 
 
