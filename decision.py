@@ -52,7 +52,6 @@ def decision_onKeyPress(app, key):
         return 
     elif key == 'i':
         app.currDec += 1
-        app.log.insert(0,"Chose Investment")
         setActiveScreen('investment')
         return 
     else:

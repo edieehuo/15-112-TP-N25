@@ -25,9 +25,9 @@ def buyStocks_redrawAll(app):
         drawLabel(f'Number of stocks to buy: {app.buyStockNum}', app.width / 2, app.height / 2, size=20, bold=True)
         drawLabel(f'Remember, no backsies! Press b to buy {app.buyStockNum} stocks.', app.width / 2, app.height / 2 + 20, size=20, bold=True)
         if app.playerPortfolio != None:
-            drawLabel(f'Your portfolio: {app.playerPortfolio}', app.width / 2, app.height / 2 + 50, size=20, align='center')
+            drawLabel(f'Curr. Holdings: {app.playerPortfolio}', app.width / 2, app.height / 2 + 50, size=20, align='center')
     if app.tooBroke:
-        drawLabel(f'Too broke to buy {app.buyStockNum} stocks.', app.width / 2, app.height / 2 + 80, size=20, bold=True)
+        drawLabel(f'Cannot afford to buy {app.buyStockNum} stocks.', app.width / 2, app.height / 2 + 80, size=20, bold=True)
 
 def buyStocks_onKeyPress(app, key):
     if key.isdigit():  # Check if the key pressed is a digit (number)
@@ -37,6 +37,8 @@ def buyStocks_onKeyPress(app, key):
     elif key == 'b' and  app.buyStockNum is not None:
         if canBuy(app):  
             app.tooBroke = False 
+            app.log.insert(0,f'Invested ${app.invested} in Stocks')
+            app.invested = 0 #resetting back to the beginning so that i don't have cray nums
             app.player.money -= app.stockInfo.stockPrice*app.buyStockNum 
             app.playerPortfolio.addStock(app.stockInfo.stockPrice, app.stockInfo.stockVolatility, app.buyStockNum)
             print(app.playerPortfolio)
@@ -47,11 +49,11 @@ def buyStocks_onKeyPress(app, key):
         pass
 
 def canBuy(app): 
-    print('buyStocks: canBuy', app.buyStockNum, app.stockInfo.stockPrice)
+    # print('buyStocks: canBuy', app.buyStockNum, app.stockInfo.stockPrice)
     value = app.buyStockNum * app.stockInfo.stockPrice
-    print('buyStocks: canBuy', value)
-    print('buyStocks: canBuy', app.player.money) 
+    # print('buyStocks: canBuy', value)
+    # print('buyStocks: canBuy', app.player.money) 
     if value <= app.player.money:
-        print(f'has this much {app.player.money},000 , want to buy {value} amount stocks')
+        app.invested = value 
         return True 
     return False 

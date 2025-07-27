@@ -53,6 +53,7 @@ def start_onScreenActivate(app):
 
     #player investment 
     app.playerPortfolio = Portfolio(None, None, None)
+    app.invested = 0 
 
     #tracking number of decisions made 
     app.currDec = 0    
