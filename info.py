@@ -3,14 +3,16 @@ from cmu_graphics import *
 
 #---Information Screen--------------------------------------------------------------------------------------
 def info_onScreenActivate(app):
+    app.drawRules = False 
     pass
 
 def info_redrawAll(app):
-    drawLabel("Information Screen", app.width/2, 20, size=40, bold=True)
-    drawLabel("Welcome to the Game!", app.width/2, 30)
-    drawLabel("Choose carefully- no backsies on each step", app.width/2, 50)
-    drawLabel("You will be making decisions to reach your money goals", app.width/2, 70)
-    drawLabel("You can gamble, invest, or work a job at any given step", app.width/2, 90)
+    drawLabel("Information Screen, space for Rules", app.width/2, 20, size=40, bold=True)
+    if app.drawRules: 
+        drawLabel('ok rule 1 blah blah blah',app.width/2, 30 )
+        drawLabel("Choose carefully- no backsies on each step", app.width/2,app.height/2 - 150)
+        drawLabel("You will be making decisions to reach your money goals", app.width/2, app.height/2 - 120)
+        drawLabel("You can gamble, invest, or work a job at any given step", app.width/2, app.height/2 - 130)
 
     #Telling player about what they spawned in as
     drawLabel(f"Welcome to adulting, {app.player.name}.", app.width/2, app.height/2 - 20, size = 30, bold=True)
@@ -22,6 +24,9 @@ def info_redrawAll(app):
     pass
 
 def info_onKeyPress(app, key):
+    if key == 'space':
+        app.drawRules = not app.drawRules #toggle app.drawRules  
+
     if key == 'enter':
         setActiveScreen('decision')
     else:

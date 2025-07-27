@@ -13,8 +13,8 @@ def decision_onScreenActivate(app):
     #STOCKS SET UP
     app.drawStockInfo = False
     app.stockPrice = random.randint(10, 100)
-    app.stockPercentVolatility = random.randint(10, 20)
-    app.stockInfo = stockInfo(app.stockPrice, app.stockPercentVolatility)
+    app.stockVolatility = random.randint(10, 20)
+    app.stockInfo = stockInfo(app.stockPrice, app.stockVolatility)
     pass
 
 def decision_redrawAll(app):   
@@ -37,7 +37,6 @@ def decision_onKeyPress(app, key):
         return #this doesn't let u keep on going 
     if key == 's':
         app.drawStockInfo = not app.drawStockInfo  # Toggle stock info display
-        print(f'app.stockPrice: {app.stockPrice}, app.stockPercentVolatility: {app.stockPercentVolatility}')
 
     if key == 'h':
         app.currDec += 1

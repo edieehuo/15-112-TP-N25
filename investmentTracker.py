@@ -22,9 +22,10 @@ def investmentTracker_redrawAll(app):
 
     # Draw Stock Info 
     if app.drawStockInfo:
-        drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", boxX, boxY + padding, size=20)
-        drawLabel(f"Stock Volatility: {app.stockInfo.stockPercentVolatility}%", boxX, boxY + padding + lineHeight, size=20)
-        drawLabel(f"Press S To Hide Stock Market Info", boxX, boxY + padding + 2 * lineHeight, size=20)
+        drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", boxX + 5, boxY + padding, size=15, align = 'left')
+        drawLabel(f"Stock Volatility: {app.stockInfo.stockVolatility}%", boxX + 5, boxY + padding + lineHeight, size=15, align = 'left')
+        drawLabel(f"Key S To Hide Stock Info", boxX + 5, boxY + padding + 2 * lineHeight, size=15, align = 'left', bold = True, fill = 'blue')
     if not app.drawStockInfo:
-        drawLabel(f"Press S To See Stock Market Info", boxX, boxY + padding + 2 * lineHeight, size=20)
+        drawLabel(f"Key S To Show Stock Info", boxX + 5, boxY + padding + 2 * lineHeight, size=15, align = 'left',  bold = True, fill = 'blue')
+
 

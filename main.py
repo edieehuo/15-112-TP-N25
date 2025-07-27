@@ -4,7 +4,8 @@
 #--- IMPORTS--------------------------------------------------------------------------------------
 import sys
 from cmu_graphics import *
-from player import Player
+from player import *
+from playerPortfolio import *
 from spawn import *
 from info import *
 from decision import *
@@ -16,11 +17,14 @@ from run import *
 #GAMBLING IMPORTS
 from gambling import *
 from numbersGame import *
-from lottery import *
+from lottery import * 
 
 #INVESTMENT IMPORTS
 from investment import *
 from stocks import *
+from playerPortfolio import *
+from buyStocks import *
+from sellStocks import *
 from deposits import *
 
 #OTHER
@@ -46,6 +50,9 @@ def start_onScreenActivate(app):
     app.player = Player(app.name, app.money, app.moneyGoals, app.time)
     app.log = []  # Initialize the activity log
     print(app.player) 
+
+    #player investment 
+    app.playerPortfolio = Portfolio(None, None, None)
 
     #tracking number of decisions made 
     app.currDec = 0    

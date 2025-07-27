@@ -1,11 +1,12 @@
 from cmu_graphics import *
+from playerPortfolio import *
 #--- Stocks Screen --------------------------------------------------------------------------------------
-# StocksClass: 
+# Stocks Class: 
 import random
 class stockInfo:
-    def __init__(self, stockPrice, stockPercentVolatility):
+    def __init__(self, stockPrice, stockVolatility):
         self.stockPrice = stockPrice
-        self.stockPercentVolatility = stockPercentVolatility
+        self.stockVolatility = stockVolatility
 
 def stocks_onScreenActivate(app):  
     pass
@@ -15,7 +16,7 @@ def stocks_redrawAll(app):
     if app.screenName == 'decision':
         if app.drawStockInfo:
             drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", app.width/2, app.height/2 + 150, size=20)
-            drawLabel(f"Stock Volatility: {app.stockInfo.stockPercentVolatility}%", app.width/2, app.height/2 + 180, size=20)
+            drawLabel(f"Stock Volatility: {app.stockInfo.stockVolatility}%", app.width/2, app.height/2 + 180, size=20)
             drawLabel(f"Press S To Hide Stock Market Info", app.width/2, app.height - 50, size=20)
         if not app.drawStockInfo:
             drawLabel(f"Press S To See Stock Market Info", app.width/2, app.height - 50, size=20)
@@ -23,14 +24,18 @@ def stocks_redrawAll(app):
     #ON STOCK SCREEN DRAWING
     if app.screenName == 'stocks':
         drawLabel("Stocks Screen", app.width/2, 10, size=40, bold=True)
-        
-        drawLabel("Press B to Buy Stocks", app.width/2, app.height/2 - 50)
-        drawLabel("Press S to Sell Stocks", app.width/2, app.height/2)
+        drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", app.width/2, app.height/2 - 150, size=20)
+        drawLabel(f"Stock Volatility: {app.stockInfo.stockVolatility}%", app.width/2, app.height/2 - 180, size=20)
+
+        drawLabel("Press B to Buy Stocks", app.width/2, app.height/2)
+        drawLabel("Press S to Sell Stocks", app.width/2, app.height/2 + 50)
 
 def stocks_onKeyPress(app, key):
     if key == 'b':
+        setActiveScreen('buyStocks')
         pass 
     elif key == 's':
+        setActiveScreen('sellStocks')
         pass
     elif key == 'space':
         setActiveScreen('decision')
