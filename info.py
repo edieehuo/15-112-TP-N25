@@ -9,7 +9,6 @@ def info_onScreenActivate(app):
 def info_redrawAll(app):
     drawLabel("Information Screen, space for Rules", app.width/2, 20, size=40, bold=True)
     if app.drawRules: 
-        drawLabel('ok rule 1 blah blah blah',app.width/2, 30 )
         drawLabel("Choose carefully- no backsies on each step", app.width/2,app.height/2 - 150)
         drawLabel("You will be making decisions to reach your money goals", app.width/2, app.height/2 - 120)
         drawLabel("You can gamble, invest, or work a job at any given step", app.width/2, app.height/2 - 130)
