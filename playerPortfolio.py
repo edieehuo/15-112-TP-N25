@@ -11,7 +11,13 @@ class Portfolio:
         self.stockVolatility = stockVolatility
         self.numHeld = numHeld
         self.numDiffStocks = len(self.stocks)
-
+    def __hash__(self):
+        return hash((self.stockPrice, self.stockVolatility))
+    def __eq__(self,other):
+        if isinstance(other, Portfolio):
+            if self.stockPrice == other.stockPrice and self.stockVolatility == other.stockVolatility:
+                return True 
+        return False 
     def __repr__(self):
         return f'Num Stocks: {self.numDiffStocks} Portfolio: {self.stocks}'
     

@@ -12,16 +12,9 @@ def stocks_onScreenActivate(app):
     pass
 
 def stocks_redrawAll(app):
-    # DECISION SCREEN STOCK INFO DRAWING 
-    if app.screenName == 'decision':
-        if app.drawStockInfo:
-            drawLabel(f"Stock Volatility: {app.stockInfo.stockVolatility}%", app.width/2, app.height/2 + 150, size=20)
-            drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", app.width/2, app.height/2 + 180, size=20)
-            drawLabel(f"Press S To Hide Stock Market Info", app.width/2, app.height - 50, size=20)
-        if not app.drawStockInfo:
-            drawLabel(f"Press S To See Stock Market Info", app.width/2, app.height - 50, size=20)
-    
+
     #ON STOCK SCREEN DRAWING
+    drawLabel(f"Stock Available To Buy:", app.width/2, 250, size=20, bold = True)
     if app.screenName == 'stocks':
         drawLabel("Stocks Screen", app.width/2, 10, size=40, bold=True)
         drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", app.width/2, app.height/2 - 180, size=20)

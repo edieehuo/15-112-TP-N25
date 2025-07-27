@@ -50,9 +50,11 @@ def start_onScreenActivate(app):
     app.log = []  # Initialize the activity log
     print(app.player) 
 
-    #player investment 
+    #player stocks 
     app.playerPortfolio = Portfolio(None, None, None)
     app.invested = 0 
+    app.sellStockNum = None 
+    
 
     #tracking number of decisions made 
     app.currDec = 0    
