@@ -1,36 +1,34 @@
 import sys
 import random
 from cmu_graphics import *
+from sellStocks import *
+
 
 class Portfolio:
     def __init__(self, stockPrice, stockVolatility, numHeld):
-    # def __init__(self):
-        # Portfolio structure: mapping { (stockPrice, stockVolatility): {numHeld: numberHeld, value: totalValue} }
         self.stocks = dict()
         self.stockPrice = stockPrice
         self.stockVolatility = stockVolatility
         self.numHeld = numHeld
+        self.numDiffStocks = len(self.stocks)
 
     def __repr__(self):
-        return f'Price: {self.stockPrice}, Volatility: {self.stockVolatility} Shares: {self.numHeld} '
+        return f'Num Stocks: {self.numDiffStocks} Portfolio: {self.stocks}'
+    
     def addStock(self, stockPrice, stockVolatility, buyStockNum):
         stockKey = (stockPrice, stockVolatility)
-        print(stockKey)
-        # Check if the stock already exists in portfolio
-        # If stock already exists, add to the held stock count and update value
         if stockKey in self.stocks:
             self.stocks[stockKey]['numHeld'] += buyStockNum
-            # Update the total value based on the new stock price with volatility
             self.stocks[stockKey]['value'] += buyStockNum * stockPrice
-            print(self.stocks)
+            self.numDiffStocks = len(self.stocks)
         else:
-            # Otherwise, create a new stock entry with the new value considering volatility
             self.stocks[stockKey] = {'numHeld': buyStockNum,'value': stockPrice * buyStockNum}
-            print(self.stocks)
+            self.numDiffStocks = len(self.stocks)
 
-    def getStockValue(self, stockPrice, stockVolatility):
-            stockKey = (stockPrice, stockVolatility)
-            if stockKey in self.stocks:
-                return self.stocks[stockKey]['value']
-            else:
-                return None
+    def getAllStockTuplesInList(self): 
+        if self.numDiffStocks == 0:
+            return 'No stocks'
+        else: 
+            stockList = list(self.stocks.keys())
+            return stockList
+            

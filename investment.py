@@ -1,5 +1,7 @@
 import sys
 from cmu_graphics import *
+from sellStocks import *
+
 
 def investment_onScreenActivate(app):
     app.screenName = 'investment'

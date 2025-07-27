@@ -8,6 +8,8 @@ from decision import *
 from investment import *
 from stocks import *
 from deposits import *
+from sellStocks import *
+
 
 def buyStocks_onScreenActivate(app):
     app.buyStockNum = None  # Initialize as None, will wait for user input
@@ -28,7 +30,7 @@ def buyStocks_onKeyPress(app, key):
         app.buyStockNum = int(key)
     elif key == 'b' and app.buyStockNum is not None:  # If 'b' is pressed and buyStockNum is valid
         # Add the stock using the input number of stocks
-        app.playerPortfolio = app.playerPortfolio.addStock(app.stockInfo.stockPrice, app.stockInfo.stockVolatility, app.buyStockNum)
+        app.playerPortfolio.addStock(app.stockInfo.stockPrice, app.stockInfo.stockVolatility, app.buyStockNum)
         print(app.playerPortfolio)
         setActiveScreen('decision')
     elif key == 'space':

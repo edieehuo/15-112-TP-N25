@@ -10,11 +10,13 @@ from stocks import *
 import random
 def decision_onScreenActivate(app):
     app.screenName = 'decision'
+    print('decision screen app.playerPortfolio', {app.playerPortfolio})
     #STOCKS SET UP
     app.drawStockInfo = False
     app.stockPrice = random.randint(10, 100)
     app.stockVolatility = random.randint(10, 20)
     app.stockInfo = stockInfo(app.stockPrice, app.stockVolatility)
+
     pass
 
 def decision_redrawAll(app):   

@@ -1,14 +1,15 @@
 from cmu_graphics import *
 from playerPortfolio import *
+from sellStocks import *
 #--- Stocks Screen --------------------------------------------------------------------------------------
 # Stocks Class: 
-import random
 class stockInfo:
     def __init__(self, stockPrice, stockVolatility):
         self.stockPrice = stockPrice
         self.stockVolatility = stockVolatility
 
 def stocks_onScreenActivate(app):  
+    print('in stocksOnScreenActivate', app.playerPortfolio)
     pass
 
 def stocks_redrawAll(app):
