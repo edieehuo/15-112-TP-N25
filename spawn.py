@@ -26,7 +26,7 @@ def spawn_redrawAll(app):
 def spawn_onKeyPress(app, key):
     if key == 'enter' or key == 'space':
         # Generate goalmoney, starting money, number of "years" they have 
-        app.moneyGoals = random.randint(10, 100)
+        app.moneyGoals = random.randint(10, 100)*1000
         app.money = random.randint(int(app.moneyGoals * 0.2), int(app.moneyGoals * 0.5))
         app.time = random.randint(5, 10) #TWEAK TO BE based on life expectancy/working years of Americans 
 

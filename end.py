@@ -12,17 +12,17 @@ def end_redrawAll(app):
     barWidth = 500
     barHeight = 30
     if app.player.money >= app.player.moneyGoals:
-        drawLabel(f"You reached your goal of ${app.player.moneyGoals},000!", app.width/2, app.height/2 - 20)
+        drawLabel(f"You reached your goal of ${app.player.moneyGoals}!", app.width/2, app.height/2 - 20)
         drawRect(barX, barY, barWidth, barHeight, fill='lightGreen', border ='black')
     else:
-        drawLabel(f"You did not reach your goal of ${app.player.moneyGoals},000.", app.width/2, app.height/2 - 20)
+        drawLabel(f"You did not reach your goal of ${app.player.moneyGoals}.", app.width/2, app.height/2 - 20)
         percent = app.player.money / app.player.moneyGoals
         percent = min(max(percent, 0), 1)
         drawRect(barX, barY, barWidth, barHeight, fill='red', border='black')
         drawRect(barX, barY, barWidth * percent, barHeight, fill='lightGreen', border ='black')
-        drawLabel(f"${app.player.money},000 / ${app.player.moneyGoals},000", app.width/2, barY + barHeight + 15)
+        drawLabel(f"${app.player.money} / ${app.player.moneyGoals}", app.width/2, barY + barHeight + 15)
     pass 
-    drawLabel(f"You made a total of ${app.player.money},000.", app.width/2, app.height/2 + 10)
+    drawLabel(f"You made a total of ${app.player.money}.", app.width/2, app.height/2 + 10)
     drawLabel("Press 'Enter' to restart", app.width/2, app.height/2 + 70, bold=True)
 
 def end_onKeyPress(app, key):

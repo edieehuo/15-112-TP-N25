@@ -16,8 +16,8 @@ def info_redrawAll(app):
 
     #Telling player about what they spawned in as
     drawLabel(f"Welcome to adulting, {app.player.name}.", app.width/2, app.height/2 - 20, size = 30, bold=True)
-    drawLabel(f"Your Current Bank Account: ${app.player.money},000", app.width/2, app.height/2 + 10)
-    drawLabel(f"Your Target Amount To Make: ${app.player.moneyGoals},000", app.width/2, app.height/2 + 40)
+    drawLabel(f"Your Current Bank Account: ${app.player.money}", app.width/2, app.height/2 + 10)
+    drawLabel(f"Your Target Amount To Make: ${app.player.moneyGoals}", app.width/2, app.height/2 + 40)
     drawLabel(f"Number of Years You Have: {app.player.time}", app.width/2, app.height/2 + 70)
 
     drawLabel("Hit 'Enter' to Begin Your Journey", app.width/2, app.height/2 + 90, size = 20, bold=True)

@@ -7,7 +7,7 @@ from cmu_graphics import *
 
 def hamster_onScreenActivate(app):
     app.screenName = 'hamster'
-    app.hamsterMoneyAdd = 2
+    app.hamsterMoneyAdd = 2000
     pass 
 
 def hamster_redrawAll(app):

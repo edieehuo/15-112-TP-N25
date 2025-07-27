@@ -13,7 +13,7 @@ def decision_onScreenActivate(app):
     print('decision screen app.playerPortfolio', {app.playerPortfolio})
     #STOCKS SET UP
     app.drawStockInfo = False
-    app.stockPrice = random.randint(10, 100)
+    app.stockPrice = random.randint(100, 1000)
     app.stockVolatility = random.randint(10, 20)
     app.stockInfo = stockInfo(app.stockPrice, app.stockVolatility)
 

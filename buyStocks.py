@@ -37,7 +37,7 @@ def buyStocks_onKeyPress(app, key):
     elif key == 'b' and  app.buyStockNum is not None:
         if canBuy(app):  
             app.tooBroke = False 
-            app.money -= app.stockInfo.stockPrice*app.buyStockNum 
+            app.player.money -= app.stockInfo.stockPrice*app.buyStockNum 
             app.playerPortfolio.addStock(app.stockInfo.stockPrice, app.stockInfo.stockVolatility, app.buyStockNum)
             print(app.playerPortfolio)
             setActiveScreen('decision')
@@ -51,7 +51,7 @@ def canBuy(app):
     value = app.buyStockNum * app.stockInfo.stockPrice
     print('buyStocks: canBuy', value)
     print('buyStocks: canBuy', app.player.money) 
-    if value <= app.player.money*1000:
+    if value <= app.player.money:
         print(f'has this much {app.player.money},000 , want to buy {value} amount stocks')
         return True 
     return False 

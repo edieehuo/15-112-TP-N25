@@ -19,8 +19,8 @@ def tracker_redrawAll(app):
 
     # Labels
     drawLabel(f"Player: {app.player.name}", x, y, size=15, align='left')
-    drawLabel(f"Savings: ${app.player.money},000", x, y + lineHeight, size=15, align='left')
-    drawLabel(f"Goal: ${app.player.moneyGoals},000", x, y + 2 * lineHeight, size=15, align='left')
+    drawLabel(f"Savings: ${app.player.money}", x, y + lineHeight, size=15, align='left')
+    drawLabel(f"Goal: ${app.player.moneyGoals}", x, y + 2 * lineHeight, size=15, align='left')
     drawLabel(f"Status:", x, 140, size=15, align='left', bold = True)
 
     #Steps Left 
@@ -44,7 +44,7 @@ def drawPercentage(app, barX, barY):
 
     # Label below bar
     drawLabel(f"{int(percent * 100)}% Made", barX, barY + barHeight + 20, align='left', size=15, bold = True)
-    drawLabel(f"${app.player.money},000 / ${app.player.moneyGoals},000", barX, barY + barHeight + 40, align='left', size=15)
+    drawLabel(f"${app.player.money} / ${app.player.moneyGoals}", barX, barY + barHeight + 40, align='left', size=15)
     # Label for money left to go
     moneyLeftToGo = app.player.moneyGoals - app.player.money
     moneyMsg = abs(moneyLeftToGo)
@@ -53,7 +53,7 @@ def drawPercentage(app, barX, barY):
 
     if moneyLeftToGo < 0:
         # Goal exceeded
-        drawLabel(f"+${moneyMsg},000", barX, labelY,
+        drawLabel(f"+${moneyMsg}", barX, labelY,
                 fill='green', align='left', size=15)
     elif moneyLeftToGo == 0:
         # Goal achieved
@@ -61,7 +61,7 @@ def drawPercentage(app, barX, barY):
                 fill='yellow', align='left', size=15)
     else:
         # Still working toward goal
-        drawLabel(f"-${moneyMsg},000", barX, labelY,
+        drawLabel(f"-${moneyMsg}", barX, labelY,
                 fill='red', align='left', size=15)
 
 def drawStepsLeft(app):
