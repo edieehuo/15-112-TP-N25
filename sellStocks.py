@@ -12,9 +12,10 @@ from investment import *
 from stocks import *
 
 def sellStocks_onScreenActivate(app):
+    app.sellAmount = 0 
     if app.playerPortfolio.numDiffStocks > 0:
         app.drawNothingToSell = False 
-    else:
+    if app.playerPortfolio.stocks == {}:
         print('entering nothing to sell')
         app.drawNothingToSell = True  # If portfolio is empty, show a message and allow them to return
         
@@ -25,27 +26,51 @@ def sellStocks_redrawAll(app):
         drawLabel("Your portfolio is empty!", app.width / 2, app.height / 2 - 30, size=20, align='center')
         drawLabel("Press Enter to return to the previous screen", app.width / 2, app.height / 2, size=20, align='center')
     else:
-        drawLabel("Choose stock to sell (by index):", app.width / 2, app.height / 2 - 50, size=20, align='center')
+        drawLabel("Which stock to sell:", app.width / 2, app.height / 2 - 50, size=20, align='center')
+
         allStockTuples = app.playerPortfolio.getAllStockTuplesInList()
+        stockList = list(app.playerPortfolio.stocks.items())
+        print('sellStocks: redrawAll portfolio', app.playerPortfolio)
+        print('sellStocks: redrawAll stocks',app.playerPortfolio.stocks)
         for i in range(len(allStockTuples)):
-            strikePrice, volatility = allStockTuples[i] 
-            drawLabel(f"Stock {i+1}: Bought For ${strikePrice} /share, \u03C3: {volatility}%", #\u03C3 is for sigma
+            stockKey, stockData = stockList[i] 
+            strikePrice, volatility = stockKey
+            numHeld = stockData['numHeld']
+            value = stockData['value']
+            drawLabel(f"{numHeld} Shares of Stock {i+1}: Bought For ${strikePrice} /share, \u03C3: {volatility}%", #\u03C3 is for sigma
                       app.width / 2, app.height / 2 + (i * 30), size=20)
-            drawLabel(f'Stock {i+1}: CurrVal', 
-                      app.width / 2, app.height / 2 + (i * 30) + 20, size=20)
-        if app.sellStockNum is not None:
-            drawLabel(f"selling stock {app.sellStockNum + 1}, press c to change", 
+
+        if app.sellStockNum is None:
+            drawLabel(f"Selling stock:", 
                       app.width / 2, app.height / 2 + 150, size=20, align='center')
+            drawLabel(f"Press C to Change Stock Selection", 
+                      10, app.height / 2 + 150, size=20, align = 'left')
+            
+            drawLabel(f"Num To Sell: ",  
+                      app.width / 2, app.height / 2 + 180, size=20, fill = 'gray')            
+            drawLabel(f"Press 's' to sell- be certain! ",  
+                      app.width / 2, app.height / 2 + 200, size=20)
+        if app.sellStockNum is not None:
+            drawLabel(f"Selling stock {app.sellStockNum + 1}", 
+                      app.width / 2, app.height / 2 + 150, size=20)
+            drawLabel(f"Press C to Change Stock Selection", 
+                      10, app.height / 2 + 150, size=20, align = 'left')
+            drawLabel(f"Num To Sell: {app.sellAmount}",  
+                      app.width / 2, app.height / 2 + 180, size=20, align='center', fill = 'red')            
+            drawLabel(f"Press 's' to sell- be certain! ", 
+                      app.width / 2, app.height / 2 + 200, size=20, align='center')
+
 
 def sellStocks_onKeyPress(app, key):
     if app.drawNothingToSell:
         if key == 'enter':
             setActiveScreen('stocks')
-    #let user change stock... 
-    if key == 'c': 
-        app.sellStockNum = None 
+    #Let user change stock 
+    if app.sellStockNum is None:
+        if key == 'c': 
+            pass 
 
-    if key.isdigit():  # Check if the key pressed is a digit (number)
+    if key.isdigit():   # Check if the key pressed is a digit (number)
         if app.sellStockNum is None:  # First step, selecting stock to sell
             stockInd = int(key) - 1  # Convert the index to zero-based
             if 0 <= stockInd < len(app.playerPortfolio.stocks):
@@ -53,25 +78,36 @@ def sellStocks_onKeyPress(app, key):
             else:
                 pass 
         elif app.sellStockNum is not None:
-            allStockTuples = app.playerPortfolio.getAllStockTuplesInList()
-            stockKey = allStockTuples[app.sellStockNum]
-            print(stockKey)
-            stock = app.playerPortfolio.stocks[stockKey]
-            sellAmount = int(key)
-            print(f'sellStocks onKeyPress: sellAmount: {sellAmount}')
-            if sellAmount <= stock['numHeld']:
-                # Subtract the amount sold from portfolio
-                stock['numHeld'] -= sellAmount
-                stock['value'] = stock['numHeld'] * stockKey[0]  # Update total value
-                app.money += stockKey[0] * sellAmount  # Add money to player's balance
-                print(f"Sold {sellAmount} of {stockKey[0]}")
-                if stock['numHeld'] == 0:
-                    app.playerPortfolio.stocks.pop(stockKey)
-                #Reset input 
-                app.sellStockNum = None  
-                setActiveScreen('decision')  # Go back to decision screen after sale
-            else:
-                print("Invalid number to sell.")
+            app.sellAmount = int(key)
+            if key == 'c':
+                app.sellStockNum = None 
+            print(f'sellStocks.py onKeyPress: sellAmount: {app.sellAmount}')
+
+
+    if key == 's' and app.sellStockNum is not None: 
+        allStockTuples = app.playerPortfolio.getAllStockTuplesInList()
+        stockKey = allStockTuples[app.sellStockNum]
+        print(stockKey)
+        stock = app.playerPortfolio.stocks[stockKey]
+        if app.sellAmount <= stock['numHeld']:
+            stock['numHeld'] -= app.sellAmount
+            stock['value'] = stock['numHeld'] * stockKey[0]  # Update total value
+            moneyFromSellingStocks = stockKey[0] * app.sellAmount
+            app.player.money += moneyFromSellingStocks  # Add money to player's balance
+            print(f"Sold {app.sellAmount} of {stockKey[0]}")
+            if stock['numHeld'] == 0:
+                app.playerPortfolio.stocks.pop(stockKey)
+            
+            #Reset input 
+            app.log.insert(0,f'Made ${moneyFromSellingStocks} from Stocks')
+            app.sellStockNum = None  
+            app.sellAmount = 0
+            setActiveScreen('decision')  # Go back to decision screen after sale
+        else:
+            setActiveScreen('sellStocks')
+            print("Invalid number to sell.")
+            pass
+                    
     
     else:
         pass  
