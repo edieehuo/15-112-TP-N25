@@ -3,6 +3,7 @@ import sys
 from cmu_graphics import *
 from tracker import *  
 from investmentTracker import *
+from playerHoldingTracker import *
 from stocks import *
 #-----------------------------------------------------------------------------------------------------
 #---Decision Screen--------------------------------------------------------------------------------------
@@ -10,7 +11,6 @@ from stocks import *
 import random
 def decision_onScreenActivate(app):
     app.screenName = 'decision'
-    print('decision screen app.playerPortfolio', {app.playerPortfolio})
     #STOCKS SET UP
     app.drawStockInfo = False
     app.stockPrice = random.randint(100, 1000)
@@ -24,8 +24,9 @@ def decision_redrawAll(app):
     drawLabel("Decision Screen", app.width/2, 10, size=40, bold=True)
 
     #DRAWING TRACKER 
-    tracker_redrawAll(app)  # Assuming tracker_redrawAll is defined elsewhere
-    investmentTracker_redrawAll(app)  # Assuming investmentTracker_redrawAll is defined elsewhere
+    tracker_redrawAll(app)  
+    investmentTracker_redrawAll(app)  
+    playerHoldingTracker_redrawAll(app)
 
     #DRAWING INFORMATION 
     drawLabel(f" Choose Carefully...  ", app.width/2, app.height/2-100, size=40, bold=True)
@@ -42,7 +43,6 @@ def decision_onKeyPress(app, key):
 
     if key == 'h':
         app.currDec += 1
-        app.log.insert(0,"+2,000 Hamster Wheel")
         setActiveScreen('hamster')
         return 
     elif key == 'g':

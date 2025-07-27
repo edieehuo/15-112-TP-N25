@@ -12,7 +12,7 @@ def investmentTracker_redrawAll(app):
     boxY = 0
     boxWidth = 200
     boxHeight = app.height
-    drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey', border='black')
+    drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey')
 
     # Set padding inside the box
     padding = 20

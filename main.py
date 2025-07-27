@@ -2,7 +2,6 @@
 #-----------------------------------------------------------------------------------------------------
 #.....................................................................................................
 #--- IMPORTS--------------------------------------------------------------------------------------
-import sys
 from cmu_graphics import *
 from player import *
 from playerPortfolio import *
@@ -22,10 +21,10 @@ from lottery import *
 #INVESTMENT IMPORTS
 from investment import *
 from stocks import *
+from playerHoldingTracker import *
 from playerPortfolio import *
 from buyStocks import *
 from sellStocks import *
-from deposits import *
 
 #OTHER
 from tracker import *

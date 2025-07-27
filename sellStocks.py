@@ -10,7 +10,6 @@ from decision import *
 #INVESTMENT IMPORTS
 from investment import *
 from stocks import *
-from deposits import *
 
 def sellStocks_onScreenActivate(app):
     # Check if the player has a portfolio

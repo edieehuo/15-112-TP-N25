@@ -21,6 +21,8 @@ def info_redrawAll(app):
     drawLabel(f"Number of Years You Have: {app.player.time}", app.width/2, app.height/2 + 70)
 
     drawLabel("Hit 'Enter' to Begin Your Journey", app.width/2, app.height/2 + 90, size = 20, bold=True)
+    drawLabel("Hit 'Space' to Read Instructions", app.width/2, app.height/2 + 130, size = 20, bold=True)
+
     pass
 
 def info_onKeyPress(app, key):

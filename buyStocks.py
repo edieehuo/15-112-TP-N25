@@ -7,7 +7,6 @@ from decision import *
 #INVESTMENT IMPORTS
 from investment import *
 from stocks import *
-from deposits import *
 from sellStocks import *
 
 

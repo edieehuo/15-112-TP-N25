@@ -9,7 +9,7 @@ def tracker_redrawAll(app):
     boxY = 0
     boxWidth = 200
     boxHeight = app.height
-    drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey', border='black')
+    drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey')
 
     # Set padding inside the box
     padding = 20
@@ -21,7 +21,7 @@ def tracker_redrawAll(app):
     drawLabel(f"Player: {app.player.name}", x, y, size=15, align='left')
     drawLabel(f"Savings: ${app.player.money}", x, y + lineHeight, size=15, align='left')
     drawLabel(f"Goal: ${app.player.moneyGoals}", x, y + 2 * lineHeight, size=15, align='left')
-    drawLabel(f"Status:", x, 140, size=15, align='left', bold = True)
+    drawLabel(f"Your Stats:", x, 140, size=15, align='left', bold = True)
 
     #Steps Left 
     drawStepsLeft(app)
@@ -73,7 +73,7 @@ def drawStepsLeft(app):
 
 def drawActivityLog(app):
     distFromTracker = 300
-    drawLabel("Activity Log:", app.left + app.border, app.top + distFromTracker, size=15, align='left', bold=True)
+    drawLabel("Your Choices:", app.left + app.border, app.top + distFromTracker, size=15, align='left', bold=True)
     for i in range(len(app.log)):
         entry = app.log[i]
         drawLabel(f"{entry}", app.left + app.border, app.top + distFromTracker + (i + 1) * 20, size=15, align='left')
