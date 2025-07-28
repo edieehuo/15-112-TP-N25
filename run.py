@@ -38,11 +38,22 @@ def run_onScreenActivate(app):
     print('run_onScreenActivate', app.numFries)
     app.fries = []
     maxTries = 50
+
+    bagWidth, bagHeight = 200, 220
+    bagCenterX = app.width // 2
+    bagCenterY = app.height // 2 - 70
+
+    basketWidth = bagWidth + 80
+    basketBottom = bagCenterY - bagHeight // 2 - 50
+
+    basketCenterX = bagCenterX
+
     for _ in range(app.numFries):
         tries = 0
         while tries < maxTries:
-            x = random.randint(60 + Fry.fryW//2, 180 - Fry.fryW//2)
-            y = random.randint(150 + Fry.fryH//2, 350 - Fry.fryH//2)
+            x = random.randint(basketCenterX - basketWidth//2 + Fry.fryW//2,
+                                basketCenterX + basketWidth//2 - Fry.fryW//2)
+            y = basketBottom - Fry.fryH//2 - 20
             newFry = Fry(x, y)
             overlap = False
             for fry in app.fries:
@@ -53,6 +64,7 @@ def run_onScreenActivate(app):
                 app.fries.append(newFry)
                 break
             tries += 1
+
     app.draggingIndex = None
     app.allFriesInBag = False
 
@@ -60,21 +72,53 @@ def run_redrawAll(app):
     for i in range(len(app.fries)):
         fry = app.fries[i]
         fry.draw(isDragging=(i == app.draggingIndex))
-    drawRect(40, 120, 160, 280, fill=None, border='gray', borderWidth=4)
-    drawLabel("Fryer Basket", 120, 110, size=16, bold=True)
+    drawBasket(app)
     drawBag(app)
     friesInBag = sum(fry.inBag for fry in app.fries)
     drawLabel(f"Fries in bag: {friesInBag}/{app.numFries}", app.width/2, 50, size=20, bold=True)
     if app.allFriesInBag:
-        drawLabel("You put all the fries in the bag!\nPress Enter or Space to continue.", app.width/2, 100, size=28, fill='green', bold=True, align='center')
+        drawLabel(f"You put all {app.numFries} fries in the bag!", 
+                  app.width//2, app.height - 120, size=28, fill='green', bold=True, align='center')
+        drawLabel(f"Press Enter or Space to collect wage.", 
+                  app.width//2, app.height - 85, size=28, fill='green', bold=True, align='center')
+
+
+def drawBasket(app):
+    bagWidth, bagHeight = 200, 220
+    bagCenterX = app.width // 2
+    bagCenterY = app.height // 2 - 70
+
+    basketWidth = bagWidth + 80
+    basketHeight = 50
+
+    basketBottom = bagCenterY - bagHeight // 2 - 50
+    basketTop = basketBottom - basketHeight
+
+    basketCenterX = bagCenterX
+    basketLeft = basketCenterX - basketWidth//2
+    basketCenterY = (basketTop + basketBottom) // 2
+    
+    oilHeight = basketHeight // 2
+    oilCenterY = basketCenterY + oilHeight // 2  # Oil is in the lower half
+
+    drawRect(basketCenterX, oilCenterY, basketWidth, oilHeight,
+         fill='yellow', opacity=40, align='center')
+    for i in range(1, basketHeight, 15):
+        drawLine(basketLeft, basketTop + i*0.8, basketLeft + basketWidth, basketTop + i*0.8, opacity = 80, fill = 'lightGrey')
+    drawRect(basketCenterX, basketCenterY, basketWidth, basketHeight, fill=None, border='gray', borderWidth=5, align='center')
 
 
 def drawBag(app):
-    bagLeft = app.width - 180
-    bagTop = 200
-    bagWidth = 180
-    bagHeight = 200
-    drawRect(bagLeft, bagTop, bagWidth, bagHeight, fill='red', border='yellow', borderWidth=4)
+    bagLeft = app.width//2
+    bagTop = app.height//2 + 50
+    bagWidth = 200
+    bagHeight = 220
+    drawRect(bagLeft, bagTop, bagWidth, bagHeight, 
+             fill='red', border='black', borderWidth=4, align = 'center')
+    drawLabel(f"Just put the fries", 
+              bagLeft, bagTop, size = 15,  align = 'center', bold = True)
+    drawLabel(f"in the bag", 
+              bagLeft, bagTop + 20, size = 15, align = 'center', bold = True)
 
 def run_onMousePress(app, mouseX, mouseY):
     for i in range(len(app.fries)-1, -1, -1):
@@ -88,12 +132,19 @@ def run_onMouseDrag(app, mouseX, mouseY):
         fry = app.fries[app.draggingIndex]
         fry.x = mouseX
         fry.y = mouseY
-        bagLeft = app.width - 180
-        bagTop = 200
-        bagWidth = 120
-        bagHeight = 160
-        if (bagLeft < fry.x < bagLeft + bagWidth and
-            bagTop < fry.y < bagTop + bagHeight):
+
+        bagWidth = 200
+        bagHeight = 220
+        bagCenterX = app.width // 2
+        bagCenterY = app.height // 2 + 50
+
+        bagLeft = bagCenterX - bagWidth // 2
+        bagRight = bagCenterX + bagWidth // 2
+        bagTop = bagCenterY - bagHeight // 2
+        bagBottom = bagCenterY + bagHeight // 2
+
+        if (bagLeft < fry.x < bagRight and
+            bagTop < fry.y < bagBottom):
             fry.inBag = True
             app.draggingIndex = None
             # Update allFriesInBag

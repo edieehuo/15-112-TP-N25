@@ -39,7 +39,7 @@ def drawPercentage(app, barX, barY):
     percent = min(max(percent, 0), 1)
 
     # Progress bar
-    drawRect(barX, barY, barWidth, barHeight, fill=None, border='black', align='left')
+    drawRect(barX, barY, barWidth, barHeight, fill='pink', border='black', align='left')
     drawRect(barX, barY, barWidth * percent, barHeight, fill='green', align = 'left', border = 'black')
 
     # Label below bar
