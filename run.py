@@ -2,7 +2,6 @@ import sys
 from cmu_graphics import *
 import random 
 #---Running On Hamster Wheel Screen--------------------------------------------------------------------------------------
-#Define Class Fry 
 class Fry:
     fryW, fryH = 10, 60  # Class-wide size
 
@@ -68,6 +67,51 @@ def run_onScreenActivate(app):
     app.draggingIndex = None
     app.allFriesInBag = False
 
+def run_onMousePress(app, mouseX, mouseY):
+    for i in range(len(app.fries)-1, -1, -1):
+        fry = app.fries[i]
+        if not fry.inBag and fry.containsPoint(mouseX, mouseY):
+            app.draggingIndex = i
+            break
+
+def run_onKeyPress(app, key):
+    if app.allFriesInBag:
+        if key == 'enter' or key == 'space':
+            print('REACHED: run_onKeyPress')
+            app.player.money += app.hamsterMoneyAdd # Increase money by 2 for each run
+            app.log.insert(0,"Made $2000 At Work")
+            setActiveScreen('decision') 
+    else:
+        pass 
+
+def run_onMouseDrag(app, mouseX, mouseY):
+    if app.draggingIndex is not None:
+        fry = app.fries[app.draggingIndex]
+        fry.x = mouseX
+        fry.y = mouseY
+
+        bagWidth = 200
+        bagHeight = 220
+        bagCenterX = app.width // 2
+        bagCenterY = app.height // 2 + 50
+
+        bagLeft = bagCenterX - bagWidth // 2
+        bagRight = bagCenterX + bagWidth // 2
+        bagTop = bagCenterY - bagHeight // 2
+        bagBottom = bagCenterY + bagHeight // 2
+
+        if (bagLeft < fry.x < bagRight and
+            bagTop < fry.y < bagBottom):
+            fry.inBag = True
+            app.draggingIndex = None
+            # Update allFriesInBag
+            app.allFriesInBag = all(fry.inBag for fry in app.fries)
+        else:
+            app.allFriesInBag = all(fry.inBag for fry in app.fries)
+
+def run_onMouseRelease(app, mouseX, mouseY):
+    app.draggingIndex = None
+
 def run_redrawAll(app):
     for i in range(len(app.fries)):
         fry = app.fries[i]
@@ -119,48 +163,6 @@ def drawBag(app):
               bagLeft, bagTop, size = 15,  align = 'center', bold = True)
     drawLabel(f"in the bag", 
               bagLeft, bagTop + 20, size = 15, align = 'center', bold = True)
+    
+    
 
-def run_onMousePress(app, mouseX, mouseY):
-    for i in range(len(app.fries)-1, -1, -1):
-        fry = app.fries[i]
-        if not fry.inBag and fry.containsPoint(mouseX, mouseY):
-            app.draggingIndex = i
-            break
-
-def run_onMouseDrag(app, mouseX, mouseY):
-    if app.draggingIndex is not None:
-        fry = app.fries[app.draggingIndex]
-        fry.x = mouseX
-        fry.y = mouseY
-
-        bagWidth = 200
-        bagHeight = 220
-        bagCenterX = app.width // 2
-        bagCenterY = app.height // 2 + 50
-
-        bagLeft = bagCenterX - bagWidth // 2
-        bagRight = bagCenterX + bagWidth // 2
-        bagTop = bagCenterY - bagHeight // 2
-        bagBottom = bagCenterY + bagHeight // 2
-
-        if (bagLeft < fry.x < bagRight and
-            bagTop < fry.y < bagBottom):
-            fry.inBag = True
-            app.draggingIndex = None
-            # Update allFriesInBag
-            app.allFriesInBag = all(fry.inBag for fry in app.fries)
-        else:
-            app.allFriesInBag = all(fry.inBag for fry in app.fries)
-
-def run_onMouseRelease(app, mouseX, mouseY):
-    app.draggingIndex = None
-
-def run_onKeyPress(app, key):
-    if app.allFriesInBag:
-        if key == 'enter' or key == 'space':
-            print('REACHED: run_onKeyPress')
-            app.player.money += app.hamsterMoneyAdd # Increase money by 2 for each run
-            app.log.insert(0,"Made $2000 At Work")
-            setActiveScreen('decision') 
-    else:
-        pass 

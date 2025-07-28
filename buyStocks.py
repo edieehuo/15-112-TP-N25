@@ -15,7 +15,8 @@ def buyStocks_redrawAll(app):
     drawLabel("BUY STOCKS SCREEN", app.width / 2, 10, size=40, bold=True)
     # If buyStockNum is None, prompt the user to input a number
     if app.buyStockNum is None:
-        drawLabel("Choose between 0-9 to buy", app.width / 2, app.height / 2, size=30, align='center')
+        drawLabel("You can buy between 0-9 stocks.",  app.width // 2, app.height // 2, size=30, align='center')
+        drawLabel("How many do you want to buy?", app.width // 2, app.height // 2 + 40, size=30, align='center')
     else:
         drawLabel(f'Number of stocks to buy: {app.buyStockNum}', app.width / 2, app.height / 2, size=20, bold=True)
         drawLabel(f'Remember, no backsies! Press b to buy {app.buyStockNum} stocks.', app.width / 2, app.height / 2 + 20, size=20, bold=True)

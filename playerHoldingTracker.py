@@ -24,4 +24,6 @@ def playerHoldingTracker_redrawAll(app):
     boxWidth = 600 #width from right edge of tracker to left edge of investment 
     boxHeight = app.height - boxY #until bottom
     drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey')
+    drawLine(boxX, 0, boxX, app.height, fill = 'white')
+    drawLine(boxX + boxWidth, 0, boxX + boxWidth, app.height, fill = 'white')
     pass 

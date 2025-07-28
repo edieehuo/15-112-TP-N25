@@ -29,9 +29,10 @@ def decision_redrawAll(app):
     playerHoldingTracker_redrawAll(app)
 
     #DRAWING INFORMATION 
-    drawLabel(f" Choose Carefully...  ", app.width/2, app.height/2-100, size=40, bold=True)
-    drawLabel("Press H for Hamster Wheel", app.width/2, app.height/2 - 50)
-    drawLabel("Press G for Gambling", app.width/2, app.height/2)
+    drawLabel(f" Choose Carefully...  ", app.width/2, app.height/2-80, size=40, bold=True)
+
+    drawLabel("Press H for Hamster Wheel", app.width/2, app.height/2)
+    drawLabel("Press G for Gambling", app.width/2, app.height/2 + 25)
     drawLabel("Press I for Investment", app.width/2, app.height/2 + 50)
 
 def decision_onKeyPress(app, key): 
