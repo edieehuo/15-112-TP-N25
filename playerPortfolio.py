@@ -11,6 +11,7 @@ class Portfolio:
         self.stockVolatility = stockVolatility
         self.numHeld = numHeld
         self.numDiffStocks = len(self.stocks)
+
     def __hash__(self):
         return hash((self.stockPrice, self.stockVolatility))
     def __eq__(self,other):
@@ -25,10 +26,11 @@ class Portfolio:
         stockKey = (stockPrice, stockVolatility)
         if stockKey in self.stocks:
             self.stocks[stockKey]['numHeld'] += buyStockNum
-            self.stocks[stockKey]['value'] += buyStockNum * stockPrice
+            self.stocks[stockKey]['oldValue'] += buyStockNum * stockPrice
+            self.stocks[stockKey]['newValue'] = buyStockNum * stockPrice
             self.numDiffStocks = len(self.stocks)
         else:
-            self.stocks[stockKey] = {'numHeld': buyStockNum,'value': stockPrice * buyStockNum}
+            self.stocks[stockKey] = {'numHeld': buyStockNum,'oldValue': stockPrice * buyStockNum, 'newValue': buyStockNum * stockPrice}
             self.numDiffStocks = len(self.stocks)
 
     def getAllStockTuplesInList(self): 
@@ -37,4 +39,3 @@ class Portfolio:
         else: 
             stockList = list(self.stocks.keys())
             return stockList
-            

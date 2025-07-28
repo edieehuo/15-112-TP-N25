@@ -1,4 +1,4 @@
-import sys
+import math
 #IMPORTS=================================================================================================
 from cmu_graphics import *
 from tracker import *  
@@ -17,7 +17,23 @@ def decision_onScreenActivate(app):
     app.stockVolatility = random.randint(10, 20)
     app.stockInfo = stockInfo(app.stockPrice, app.stockVolatility)
 
+    #market condition random generation that uniformly affects newValue of EVERY stock
+    #initializes without this app.marketCond when buyer just buys something
+    app.marketCond = random.randint(-10,25)
+
+    updatePortfolioPrices(app)
     pass
+
+def updatePortfolioPrices(app):
+    if app.playerPortfolio.numDiffStocks == 0: pass 
+    # print(app.playerPortfolio.stocks)
+    for stock in app.playerPortfolio.stocks:
+        price, vol = stock
+        newPrice =  math.ceil(price*(1+((app.marketCond/100)*vol)))
+        numHeld =  app.playerPortfolio.stocks[(price,vol)]['numHeld'] 
+        app.playerPortfolio.stocks[(price,vol)]['newValue'] = newPrice * numHeld
+        
+
 
 def decision_redrawAll(app):   
     #DEVELOPMENT NOTE 

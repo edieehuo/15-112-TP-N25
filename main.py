@@ -53,6 +53,7 @@ def start_onScreenActivate(app):
     #player stocks 
     app.playerPortfolio = Portfolio(None, None, None)
     app.invested = 0 
+
     app.sellStockNum = None 
     app.sellAmount = 0
     

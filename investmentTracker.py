@@ -20,9 +20,18 @@ def investmentTracker_redrawAll(app):
     x = boxX + padding
     y = boxY + padding
 
-    drawLabel(f"Stock Avail. To Buy", boxX + 5, boxY + padding + 40, align = 'left', bold = True, fill = 'green', size = 15)
-
+    #Draw Market Conditions 
+    drawLabel(f"Current Market Condition:",
+                   boxX + 5, boxY + padding, size=15, align = 'left', bold = True, fill = 'blue')
+    if app.marketCond > 0:
+        drawLabel(f"{app.marketCond}",
+                boxX + 5, boxY + padding + lineHeight, size=15, align = 'left', bold = True, fill = 'red')
+    if app.marketCond <= 0:
+        drawLabel(f"{app.marketCond}",
+                boxX + 5, boxY + padding + lineHeight, size=15, align = 'left', bold = True, fill = 'green')
+    
     # Draw Stock Info 
+    drawLabel(f"Stock Avail. To Buy", boxX + 5, boxY + padding + 40, align = 'left', bold = True, fill = 'green', size = 15)
     if app.drawStockInfo:        
         drawLabel(f"Key S To Hide Stock Info", boxX + 5, boxY + padding + 2 * lineHeight, size=15, align = 'left', bold = True, fill = 'blue')
         drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", boxX + 10, 100, size=15, align = 'left')

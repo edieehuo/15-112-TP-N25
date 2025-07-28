@@ -36,7 +36,6 @@ def sellStocks_redrawAll(app):
             stockKey, stockData = stockList[i] 
             strikePrice, volatility = stockKey
             numHeld = stockData['numHeld']
-            value = stockData['value']
             drawLabel(f"{numHeld} Shares of Stock {i+1}: Bought For ${strikePrice} /share, \u03C3: {volatility}%", #\u03C3 is for sigma
                       app.width / 2, app.height / 2 + (i * 30), size=20)
 
@@ -91,14 +90,14 @@ def sellStocks_onKeyPress(app, key):
     if key == 's' and app.sellStockNum is not None: 
         allStockTuples = app.playerPortfolio.getAllStockTuplesInList()
         stockKey = allStockTuples[app.sellStockNum]
-        print(stockKey)
         stock = app.playerPortfolio.stocks[stockKey]
         if app.sellAmount <= stock['numHeld']:
-            stock['numHeld'] -= app.sellAmount
-            stock['value'] = stock['numHeld'] * stockKey[0]  # Update total value
-            moneyFromSellingStocks = stockKey[0] * app.sellAmount
+            sellPricePerShare = app.playerPortfolio.stocks[stockKey]['newValue'] / app.playerPortfolio.stocks[stockKey]['numHeld']
+            moneyFromSellingStocks = math.ceil(sellPricePerShare * app.sellAmount)
             app.player.money += moneyFromSellingStocks  # Add money to player's balance
             print(f"Sold {app.sellAmount} of {stockKey[0]}")
+            stock['numHeld'] -= app.sellAmount
+            stock['oldValue'] = stock['numHeld'] * stockKey[0]  # Update total value
             if stock['numHeld'] == 0:
                 app.playerPortfolio.stocks.pop(stockKey)
             
