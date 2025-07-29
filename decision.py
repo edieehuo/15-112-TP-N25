@@ -20,10 +20,10 @@ def decision_onScreenActivate(app):
     #market condition random generation that uniformly affects newValue of EVERY stock
     #initializes without this app.marketCond when buyer just buys something
     app.marketCond = random.randint(-10,25)
-
     updatePortfolioPrices(app)
     pass
 
+#i am so proud of this... so obvious after i figured it out but this was HARD 😭 ( i can add emojis to code??? heck yeah)
 def updatePortfolioPrices(app):
     if app.playerPortfolio.numDiffStocks == 0: pass 
     # print(app.playerPortfolio.stocks)
@@ -32,7 +32,7 @@ def updatePortfolioPrices(app):
         newPrice =  math.ceil(price*(1+((app.marketCond/100)*vol)))
         numHeld =  app.playerPortfolio.stocks[(price,vol)]['numHeld'] 
         app.playerPortfolio.stocks[(price,vol)]['newValue'] = newPrice * numHeld
-        
+
 
 
 def decision_redrawAll(app):   
@@ -64,7 +64,6 @@ def decision_onKeyPress(app, key):
         return 
     elif key == 'g':
         app.currDec += 1
-        app.log.insert(0,"Chose Gambling")
         setActiveScreen('gambling')
         return 
     elif key == 'i':

@@ -40,7 +40,8 @@ def drawPercentage(app, barX, barY):
 
     # Progress bar
     drawRect(barX, barY, barWidth, barHeight, fill='pink', border='black', align='left')
-    drawRect(barX, barY, barWidth * percent, barHeight, fill='green', align = 'left', border = 'black')
+    if percent > 0:
+        drawRect(barX, barY, barWidth * percent, barHeight, fill='green', align = 'left', border = 'black')
 
     # Label below bar
     drawLabel(f"{int(percent * 100)}% Made", barX, barY + barHeight + 20, align='left', size=15, bold = True)

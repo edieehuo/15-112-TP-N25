@@ -3,6 +3,7 @@
 #.....................................................................................................
 #--- IMPORTS--------------------------------------------------------------------------------------
 from cmu_graphics import *
+
 from player import *
 from playerPortfolio import *
 from spawn import *
@@ -15,7 +16,6 @@ from run import *
 
 #GAMBLING IMPORTS
 from gambling import *
-from numbersGame import *
 from lottery import * 
 
 #INVESTMENT IMPORTS

@@ -1,6 +1,3 @@
-#print debugging statement :
-print(f'in Sell Stocks on Screen Activate')
-
 from cmu_graphics import *
 from player import *
 # from spawn import *
@@ -10,6 +7,8 @@ from decision import *
 #INVESTMENT IMPORTS
 from investment import *
 from stocks import *
+
+#------Sell Stocks Screen----------------------------------------------------------------------------------------------------------------------------
 
 def sellStocks_onScreenActivate(app):
     app.sellAmount = 0 
@@ -88,23 +87,27 @@ def sellStocks_onKeyPress(app, key):
 
 
     if key == 's' and app.sellStockNum is not None: 
+
         allStockTuples = app.playerPortfolio.getAllStockTuplesInList()
         stockKey = allStockTuples[app.sellStockNum]
         stock = app.playerPortfolio.stocks[stockKey]
+
         if app.sellAmount <= stock['numHeld']:
+
             sellPricePerShare = app.playerPortfolio.stocks[stockKey]['newValue'] / app.playerPortfolio.stocks[stockKey]['numHeld']
             moneyFromSellingStocks = math.ceil(sellPricePerShare * app.sellAmount)
             app.player.money += moneyFromSellingStocks  # Add money to player's balance
-            print(f"Sold {app.sellAmount} of {stockKey[0]}")
             stock['numHeld'] -= app.sellAmount
             stock['oldValue'] = stock['numHeld'] * stockKey[0]  # Update total value
+
             if stock['numHeld'] == 0:
                 app.playerPortfolio.stocks.pop(stockKey)
-            
+
             #Reset input 
             app.log.insert(0,f'Made ${moneyFromSellingStocks} from Stocks')
             app.sellStockNum = None  
             app.sellAmount = 0
+            
             setActiveScreen('decision')  # Go back to decision screen after sale
         else:
             setActiveScreen('sellStocks')
