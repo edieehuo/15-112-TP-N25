@@ -20,7 +20,15 @@ class Portfolio:
                 return True 
         return False 
     def __repr__(self):
-        return f'Num Stocks: {self.numDiffStocks} Portfolio: {self.stocks}'
+        result = []
+        i = 0 
+        for stock in self.stocks: 
+            #stock index 
+            i += 1 
+            boughtPrice, volatility = stock
+            result.append(i)
+            print(boughtPrice, volatility)
+        return f'{self.stocks}'
     
     def addStock(self, stockPrice, stockVolatility, buyStockNum):
         stockKey = (stockPrice, stockVolatility)

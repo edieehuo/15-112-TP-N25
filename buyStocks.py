@@ -19,7 +19,7 @@ def buyStocks_redrawAll(app):
         drawLabel("How many do you want to buy?", app.width // 2, app.height // 2 + 40, size=30, align='center')
     else:
         drawLabel(f'Number of stocks to buy: {app.buyStockNum}', app.width / 2, app.height / 2, size=20, bold=True)
-        drawLabel(f'Remember, no backsies! Press b to buy {app.buyStockNum} stocks.', app.width / 2, app.height / 2 + 20, size=20, bold=True)
+        drawLabel(f"No Backsies! Press 'b' to buy {app.buyStockNum} stocks.", app.width / 2, app.height / 2 + 20, size=20, bold=True)
         if app.playerPortfolio != None:
             drawLabel(f'Curr. Holdings: {app.playerPortfolio}', app.width / 2, app.height / 2 + 50, size=20, align='center')
     if app.tooBroke:

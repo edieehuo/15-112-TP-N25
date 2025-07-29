@@ -25,7 +25,7 @@ def investmentTracker_redrawAll(app):
                    boxX + 5, boxY + padding, size=15, align = 'left', bold = True, fill = 'blue')
     if app.marketCond > 0:
         drawLabel(f"{app.marketCond}",
-                boxX + 5, boxY + padding + lineHeight, size=15, align = 'left', bold = True, fill = 'red')
+                boxX + 5, boxY + padding + 23, size=15, align = 'left', bold = True, fill = 'red')
     if app.marketCond <= 0:
         drawLabel(f"{app.marketCond}",
                 boxX + 5, boxY + padding + lineHeight, size=15, align = 'left', bold = True, fill = 'green')

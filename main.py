@@ -56,6 +56,9 @@ def start_onScreenActivate(app):
 
     app.sellStockNum = None 
     app.sellAmount = 0
+
+    app.marketCondHistory = []
+
     
 
     #tracking number of decisions made 

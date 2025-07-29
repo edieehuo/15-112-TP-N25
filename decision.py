@@ -19,8 +19,15 @@ def decision_onScreenActivate(app):
 
     #market condition random generation that uniformly affects newValue of EVERY stock
     #initializes without this app.marketCond when buyer just buys something
-    app.marketCond = random.randint(-10,25)
+    app.lowMarketCond = -10
+    app.highMarketCond = 25
+    app.marketCond = random.randint(app.lowMarketCond,app.highMarketCond)
     updatePortfolioPrices(app)
+
+    #To draw line graph 
+    app.marketCondHistory.append(app.marketCond)
+
+    
     pass
 
 #i am so proud of this... so obvious after i figured it out but this was HARD 😭 ( i can add emojis to code??? heck yeah)
