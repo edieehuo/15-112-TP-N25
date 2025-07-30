@@ -2,108 +2,118 @@ from cmu_graphics import *
 from player import Player
 from info import *
 
-#INVESTMENT IMPORTS
+# INVESTMENT IMPORTS
 from investment import *
 from stocks import *
 
 def buyStocks_onScreenActivate(app):
-    app.buyStockNum = None  # Initialize as None, will wait for user input
-    app.tooBroke = False 
-    pass 
+    app.buyStockNum = None
+    app.tooBroke = False
+    app.showHoldings = False
+
+    # Layout for Buy and View buttons
+    buttonW, buttonH = 150, 35
+    spacing = 15
+    left = app.width // 2 - buttonW // 2
+    top = 300
+
+    app.buyButton = (left, top, buttonW, buttonH)
+    app.toggleHoldingsButton = (left, top + buttonH + spacing, buttonW, buttonH)
+
 
 def buyStocks_redrawAll(app):
-    drawLabel("BUY STOCKS SCREEN", app.width / 2, 10, size=40, bold=True)
-    # If buyStockNum is None, prompt the user to input a number
+    drawRect(0, 0, app.width, app.height, fill='black')
+    # drawLabel("BUY STOCKS", app.width // 2, 40, size=36, fill='lime', bold=True)
+
+    infoX = 100
+    infoY = 220
+    drawLabel("Market Stock Info:", infoX, infoY, size=20, fill='white', bold=True, align='left')
+    drawLabel(f"Price: ${app.stockInfo.stockPrice}", infoX, infoY + 30, size=16, fill='lightGray', align='left')
+    drawLabel(f"Volatility: {app.stockInfo.stockVolatility}%", infoX, infoY + 55, size=16, fill='lightGray', align='left')
+
+    y = 120
     if app.buyStockNum is None:
-        drawLabel("You can buy between 1-9 stocks.",  app.width // 2, app.height // 2, size=30, align='center')
-        drawLabel("How many do you want to buy?", app.width // 2, app.height // 2 + 40, size=30, align='center')
+        drawLabel("Type a number (1–9) to choose how many stocks to buy.", 
+                  app.width // 2, y, size=20, fill='white', bold=True)
     else:
-        drawLabel(f'Number of stocks to buy: {app.buyStockNum}', app.width / 2, app.height / 2, size=20, bold=True)
-        drawLabel(f"No Backsies! Press 'b' to buy {app.buyStockNum} stocks.", app.width / 2, app.height / 2 + 20, size=20, bold=True)
-        if app.playerPortfolio != None:
-            drawPortfolio(app)
+        total = app.buyStockNum * app.stockInfo.stockPrice
+        drawLabel(f"You chose to buy {app.buyStockNum} stock(s)", app.width // 2, y, size=20, fill='white', bold=True)
+        drawLabel(f"Total: ${total}", app.width // 2, y + 30, size=18, fill='lightGray')
+
     if app.tooBroke:
-        drawLabel(f'Cannot afford to buy {app.buyStockNum} stocks.', app.width / 2, app.height / 2 + 80, size=20, bold=True)
+        drawLabel(f" Not enough money to buy {app.buyStockNum} stock(s).", 
+                  app.width // 2, y + 70, size=20, fill='red', bold=True)
 
-def buyStocks_onKeyPress(app, key):
-    if key.isdigit() and key != '0':  # Check if the key pressed is a digit (number)
-        app.buyStockNum = int(key)
-        app.tooBroke = False 
+    if app.buyStockNum is not None:
+        drawButton(app.buyButton, f"Buy {app.buyStockNum}")
+    drawButton(app.toggleHoldingsButton, "Hide Holdings" if app.showHoldings else "View Holdings")
 
-    elif key == 'b' and  app.buyStockNum is not None:
+    if app.showHoldings and app.playerPortfolio and app.playerPortfolio.numDiffStocks > 0:
+        drawHorizontalPortfolio(app)
+
+
+def buyStocks_onMousePress(app, mouseX, mouseY):
+    if pointInRect(mouseX, mouseY, app.toggleHoldingsButton):
+        app.showHoldings = not app.showHoldings
+    elif pointInRect(mouseX, mouseY, app.buyButton) and app.buyStockNum is not None:
         if canBuy(app):  
             app.tooBroke = False 
-            app.log.insert(0,f'Invested ${app.invested} in Stocks')
-            app.invested = 0 #resetting back to the beginning so that i don't have cray nums
-            app.player.money -= app.stockInfo.stockPrice*app.buyStockNum 
+            app.log.insert(0, f'Invested ${app.invested} in Stocks')
+            app.invested = 0
+            app.player.money -= app.stockInfo.stockPrice * app.buyStockNum
             app.playerPortfolio.addStock(app.stockInfo.stockPrice, app.stockInfo.stockVolatility, app.buyStockNum)
             setActiveScreen('decision')
-        if not canBuy(app): 
-            app.tooBroke = True 
-    else:
-        pass
+        else:
+            app.tooBroke = True
+
+def buyStocks_onKeyPress(app, key):
+    if key.isdigit() and key != '0':
+        app.buyStockNum = int(key)
+        app.tooBroke = False
 
 def canBuy(app): 
-    # print('buyStocks: canBuy', app.buyStockNum, app.stockInfo.stockPrice)
-    value = app.buyStockNum * app.stockInfo.stockPrice
-    # print('buyStocks: canBuy', value)
-    # print('buyStocks: canBuy', app.player.money) 
-    if value <= app.player.money:
-        app.invested = value 
-        return True 
-    return False 
+    total = app.buyStockNum * app.stockInfo.stockPrice
+    if total <= app.player.money:
+        app.invested = total
+        return True
+    return False
 
-def drawPortfolio(app): 
-    boxX = 200 # right edge of tracker 
-    boxY = 700 #where to stop 
+def drawButton(rect, label):
+    x, y, w, h = rect
+    drawRect(x, y, w, h, fill='dimGrey', border='white', borderWidth=2)
+    drawLabel(label, x + w // 2, y + h // 2, size=14, fill='white', bold=True)
 
-    marketPlotX = boxX
-    marketPlotY = boxY
-    #variable 
-    marketPlotHeight = 100
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
 
-    holdX = marketPlotX
-    holdY = marketPlotY + marketPlotHeight
-    # print(app.playerPortfolio)
-    # print(app.playerPortfolio.numDiffStocks)
-    if app.playerPortfolio.numDiffStocks == 0: 
-        # print('skipping in drawPort since drawPort is empty ')
-        return 
-    else: 
-        i = 0
-        iToMod = 0
-        stockSpacing = 15
-        stockColSpacing = 20
-        stockColPadding = 20
-        priceToSellPriceSpacing = 150
-        for stock in app.playerPortfolio.stocks:
-            i += 1
-            buyPrice, vol = stock # don't need volatility to be drawn 
-            newTotalValue = app.playerPortfolio.stocks[stock]['newValue']
-            if app.playerPortfolio.stocks[stock]['numHeld'] != 0:
-                sellPrice = newTotalValue //  app.playerPortfolio.stocks[stock]['numHeld']
-            else:
-                sellPrice = 'No Stocks Held'
-            # print('drawPort buy', buyPrice)
-            distBottomScreen = 10
-            if holdY + i*stockSpacing <= app.height - distBottomScreen:
-                iToMod += 1
-                drawLabel(f"{i}: Buy Price ${buyPrice}", 
-                          holdX + stockColPadding, 
-                          holdY + i*stockSpacing, align = 'left',  
-                          size = 15)
-                drawLabel(f"Market Price ${sellPrice}", 
-                          holdX + stockColPadding + priceToSellPriceSpacing, 
-                          holdY + i*stockSpacing, align = 'left', 
-                          size = 15)
-            else: 
-                drawLabel(f"{i}: Buy Price ${buyPrice}", 
-                          holdX + stockColPadding*2 + stockColSpacing*3 + priceToSellPriceSpacing*2, 
-                          holdY + (i%iToMod)*stockSpacing, align = 'left', 
-                          size = 15)
-                drawLabel(f"Market Price ${sellPrice}", 
-                          holdX + stockColPadding*2 + stockColSpacing*4 + priceToSellPriceSpacing*3, 
-                          holdY + (i%iToMod)*stockSpacing, align = 'left', 
-                          size = 15)
+# Horizontal layout of portfolio holdings
+def drawHorizontalPortfolio(app):
+    drawLabel("Your Holdings:", app.width // 2, 420, fill='lime', size=20, bold=True)
 
-    pass 
+    spacingX = 240
+    startY = 450
+    wrapThreshold = app.width - 60
+
+    x = 60
+    y = startY
+
+    i = 0
+    if app.playerPortfolio.numDiffStocks == 0 :
+        drawLabel(f"None Held!", x, y, size=14, fill='white', bold=True, align='left')
+    for stock in app.playerPortfolio.stocks:
+        buyPrice, vol = stock
+        stockData = app.playerPortfolio.stocks[stock]
+        numHeld = stockData['numHeld']
+        newValue = stockData['newValue']
+        marketPrice = newValue // numHeld if numHeld > 0 else '—'
+
+        drawLabel(f"Stock {i+1}", x, y, size=14, fill='white', bold=True, align='left')
+        drawLabel(f"${buyPrice} → ${marketPrice} | {numHeld} shares", x, y + 18, size=12, fill='lightGray', align='left')
+
+        x += spacingX
+        if x > wrapThreshold:
+            x = 60
+            y += 50
+
+        i += 1

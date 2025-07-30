@@ -26,9 +26,9 @@ def info_redrawAll(app):
         drawLabel("Make your choice carefully at each turn.", 
                   app.width/2,ruleCenter + 2*lineHeight,
                   fill = 'grey', size = 24, bold = True)
-        drawLabel("Tip: You can backtrack from an investment choice.", 
-                  app.width/2,ruleCenter + 3*lineHeight,
-                  fill = 'grey', size = 24, bold = True)
+        # drawLabel("Tip: You can backtrack from an investment choice.", 
+                #   app.width/2,ruleCenter + 3*lineHeight,
+                #   fill = 'grey', size = 24, bold = True)
 
 
 

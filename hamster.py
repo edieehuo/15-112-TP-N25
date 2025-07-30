@@ -9,6 +9,8 @@ from run import *
 def hamster_onScreenActivate(app):
     app.screenName = 'hamster'
     app.hamsterMoneyAdd = 2000
+
+    app.goToWorkButton = (app.width//2 - 100, app.height - 130, 200, 40)
     
     app.numTrainingFries = random.randint(2,5)
     app.trainingFries = []
@@ -46,11 +48,18 @@ def hamster_onScreenActivate(app):
     pass 
 
 def hamster_onMousePress(app, mouseX, mouseY):
+    if app.allTrainingFriesInBag and pointInRect(mouseX, mouseY, app.goToWorkButton):
+        setActiveScreen('run')
+
     for i in range(len(app.trainingFries)-1, -1, -1):
         fry = app.trainingFries[i]
         if not fry.inBag and fry.containsPoint(mouseX, mouseY):
             app.fryDraggingIndex = i
             break
+
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
 
 def hamster_onMouseDrag(app, mouseX, mouseY):
     if app.fryDraggingIndex is not None:
@@ -102,17 +111,14 @@ def hamster_redrawAll(app):
         drawLabel(f"Click on, then drag each fry from fryer to bag. ", 
                   app.width//2, app.height - 200, size=28, fill='yellow', bold=True, align='center')
     if app.allTrainingFriesInBag:
-        drawLabel(f"Completed Training. ", 
+        drawLabel(f"Completed Training.", 
                   app.width//2, app.height - 200, size=28, fill='green', bold=True, align='center')
-        drawLabel(f"Press 'w' to go to work.", 
-                  app.width//2, app.height - 150, size=28, fill='green', bold=True, align='center')
+        drawButton(app.goToWorkButton, "Go to Work")
 
-
-def hamster_onKeyPress(app, key):
-    if key == 'w' or key == 'W':
-        setActiveScreen('run')
-    else:
-        pass  # Ignore other keys
+def drawButton(rect, label):
+    x, y, w, h = rect
+    drawRect(x, y, w, h, fill='green', border='darkGreen', borderWidth=2)
+    drawLabel(label, x + w//2, y + h//2, size=18, fill='lime', bold=True)
 
 def drawBasket(app):
     bagWidth, bagHeight = 200, 220

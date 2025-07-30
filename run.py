@@ -38,6 +38,9 @@ def run_onScreenActivate(app):
     app.fries = []
     maxTries = 50
 
+    app.collectWageButton = (app.width//2 - 100, app.height - 130, 200, 40)
+
+
     bagWidth, bagHeight = 200, 220
     bagCenterX = app.width // 2
     bagCenterY = app.height // 2 - 70
@@ -73,6 +76,10 @@ def run_onMousePress(app, mouseX, mouseY):
         if not fry.inBag and fry.containsPoint(mouseX, mouseY):
             app.draggingIndex = i
             break
+    if app.allFriesInBag and pointInRect(mouseX, mouseY, app.collectWageButton):
+        app.player.money += app.hamsterMoneyAdd
+        app.log.insert(0, "+$2000 Work")
+        setActiveScreen('decision')
 
 def run_onKeyPress(app, key):
     if app.allFriesInBag:
@@ -131,8 +138,16 @@ def run_redrawAll(app):
     if app.allFriesInBag:
         drawLabel(f"You put {app.numFries} fries in the bag.", 
                   app.width//2, app.height - 200, size=28, fill='green', bold=True, align='center')
-        drawLabel(f"Press Enter or Space to collect your wage.", 
-                  app.width//2, app.height - 150, size=28, fill='green', bold=True, align='center')
+        drawButton(app.collectWageButton, "Collect Wage")
+
+def drawButton(rect, label):
+    x, y, w, h = rect
+    drawRect(x, y, w, h, fill='green', border='darkGreen', borderWidth=2)
+    drawLabel(label, x + w//2, y + h//2, size=18, fill='lime', bold=True)
+
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
 
 
 def drawBasket(app):

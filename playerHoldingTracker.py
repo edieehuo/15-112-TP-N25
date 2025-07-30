@@ -6,7 +6,6 @@ from info import *
 from decision import *
 
 #INVESTMENT IMPORTS
-from investment import *
 from stocks import *
 from playerPortfolio import *
 from buyStocks import *
@@ -20,7 +19,8 @@ def playerHoldingTracker_redrawAll(app):
     boxX = 200 # right edge of tracker 
     boxY = 110 
     boxWidth = 600 #width from right edge of tracker to left edge of investment 
-    boxHeight = 200
+    # boxHeight = 200
+    padding = 15
 
     #DEBUGGING HELP 
     # drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey')
@@ -32,9 +32,12 @@ def playerHoldingTracker_redrawAll(app):
     marketPlotHeight = 100
     #draw line plot of market cond variable
     drawMarketPlot(app, marketPlotX, marketPlotY, marketPlotWidth, marketPlotHeight)
+    # drawNewStockAvail(app)
+
     #draw player portoflio 
     drawPortfolio(app)
     pass 
+
 
 # Helper function to draw market condition plot
 def drawMarketPlot(app, boxX, boxY, boxWidth, boxHeight):
@@ -60,9 +63,6 @@ def drawMarketPlot(app, boxX, boxY, boxWidth, boxHeight):
                     labelX, labelY,
                     size=15, align = 'left', bold = True, fill = 'green')
 
-
-
-
         # Draw the line plot for multiple data points
         stepInterval = app.time  # Number of fixed intervals
         for i in range(1, dataPoints):
@@ -85,7 +85,7 @@ def drawMarketPlot(app, boxX, boxY, boxWidth, boxHeight):
         axisYStart = boxY  # Starting point for the axis (at the bottom of the box)
         axisYEnd = boxY + boxHeight  # Ending point for the axis (at the top of the box)
         drawLine(axisX, axisYStart, axisX, axisYEnd, fill='white', lineWidth=2)
-        drawLine(axisX, 160, axisX + boxWidth,160, fill='white', lineWidth=2, dashes= True)
+        drawLine(axisX, (boxY+boxHeight//2), axisX + boxWidth, (boxY+boxHeight//2), fill='white', lineWidth=2, dashes= True)
         drawLine(axisX + boxWidth, axisYStart, axisX + boxWidth, axisYEnd, fill='white', lineWidth=2)
 
 
@@ -103,7 +103,7 @@ def drawPortfolio(app):
     # print(app.playerPortfolio)
     # print(app.playerPortfolio.numDiffStocks)
     if app.playerPortfolio.numDiffStocks == 0: 
-        return 
+        pass 
     else: 
         drawLabel(f"Your Holdings:", boxX + 20, 635, 
               fill = 'lime', bold = True, size = 20, align = 'left')
@@ -145,3 +145,12 @@ def drawPortfolio(app):
                           size = 15)
 
     pass 
+
+def drawNewStockAvail(app):
+    drawRect(app.width//2, 230, 200,100, align = 'center')
+    drawLabel(f"New Stock Available:",  app.width//2, 230,
+              bold = True, fill = 'lime', size = 20)
+    drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", app.width//2, 260,
+                fill = 'white', size=15)
+    drawLabel(f"Stock Volatility: {app.stockInfo.stockVolatility}%",  app.width//2, 280,
+              fill = 'white', size=15)

@@ -23,13 +23,17 @@ def decision_onScreenActivate(app):
     app.highMarketCond = 15
     app.marketCond = random.randint(app.lowMarketCond,app.highMarketCond)
     updatePortfolioPrices(app)
-
     #To draw line graph 
     if len(app.marketCondHistory) == app.time: 
-        for i in range(3):
-            app.marketCondHistory.pop(0)
+        app.marketCondHistory.pop(0)
 
     app.marketCondHistory.append(app.marketCond)
+
+    buttonW, buttonH = 160, 30
+    buttonX = app.width//2 - buttonW//2
+    buttonY = 230  # just below the market graph
+
+    app.showStockButton = (buttonX, buttonY, buttonW, buttonH)
     pass
 
 def decision_redrawAll(app):   
@@ -37,10 +41,15 @@ def decision_redrawAll(app):
     drawRect(0,0, app.width, app.height, fill = 'black')
     #DEVELOPMENT NOTE 
     # drawLabel("Decision Screen", app.width/2, 10, size=40, bold=True)
-
+    
     #DRAWING TRACKER 
     tracker_redrawAll(app)  
     investmentTracker_redrawAll(app)  
+    
+    drawSmallButton(app.showStockButton, "Show New Stock Info")
+
+    if app.drawStockInfo:
+        drawNewStockAvail(app)
 
     #MARKET PLOT 
     playerHoldingTracker_redrawAll(app)
@@ -49,6 +58,11 @@ def decision_redrawAll(app):
     drawLabel(f" What will you do this month? ", app.width/2, app.height/2-80, 
               fill = 'lime', size=30, bold=True)
     drawBoxes(app)
+
+def drawSmallButton(rect, label):
+    x, y, w, h = rect
+    drawRect(x, y, w, h, fill='darkGreen', border='darkGrey', borderWidth=2, dashes = True)
+    drawLabel(label, x + w//2, y + h//2, size=12, fill='lime', bold=True)
 
 def drawBoxes(app):
     # Draw three boxes 
@@ -73,6 +87,10 @@ def decision_onMousePress(app, mouseX, mouseY):
     boxWidth = 150
     boxHeight = 50
 
+    if pointInRect(mouseX, mouseY, app.showStockButton):
+        app.drawStockInfo = not app.drawStockInfo
+        return
+    
     # Box 1: Hamster Wheel
     if (app.width/2 - boxWidth - 10 <= mouseX <= app.width/2 - 10) and (app.height/2 <= mouseY <= app.height/2 + boxHeight):
         app.currDec += 1
@@ -86,8 +104,12 @@ def decision_onMousePress(app, mouseX, mouseY):
     # Box 3: Investment
     elif (app.width/2 - boxWidth/2 <= mouseX <= app.width/2 - boxWidth/2 + boxWidth) and (app.height/2 + 60 <= mouseY <= app.height/2 + 60 + boxHeight):
         app.currDec += 1
-        setActiveScreen('investment')
+        setActiveScreen('stocks')
         return
+
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
 
 def decision_onKeyPress(app,key): 
     if key == 's':
