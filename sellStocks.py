@@ -56,7 +56,7 @@ def sellStocks_redrawAll(app):
     else:
         drawLabel(f"Selected Stock {app.sellStockNum + 1}", app.width // 2, centerY, size=20, fill='lime', bold=True)
         drawLabel("Press number to select quantity", app.width // 2, centerY + 30, size=16, fill='lightGray')
-        drawLabel("Press C to clear selection", app.width // 2, centerY + 50, size=14, fill='gray')
+        drawLabel("Press C to choose another stock", app.width // 2, centerY + 50, size=14, fill='gray')
 
     if app.sellAmount > 0:
         drawLabel(f"Amount to Sell: {app.sellAmount}", app.width // 2, centerY + 80, size=18, fill='lime', bold=True)

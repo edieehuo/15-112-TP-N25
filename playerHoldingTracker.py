@@ -41,7 +41,7 @@ def playerHoldingTracker_redrawAll(app):
 
 # Helper function to draw market condition plot
 def drawMarketPlot(app, boxX, boxY, boxWidth, boxHeight):
-    print('playerHldingTrcker: drawMarketPlot: app.marketCondHistory:', app.marketCondHistory)
+    # print('playerHldingTrcker: drawMarketPlot: app.marketCondHistory:', app.marketCondHistory)
     minCond = app.lowMarketCond
     maxCond = app.highMarketCond
 

@@ -139,16 +139,11 @@ def run_redrawAll(app):
         drawLabel(f"You put {app.numFries} fries in the bag.", 
                   app.width//2, app.height - 200, size=28, fill='green', bold=True, align='center')
         drawButton(app.collectWageButton, "Collect Wage")
-
-def drawButton(rect, label):
-    x, y, w, h = rect
-    drawRect(x, y, w, h, fill='green', border='darkGreen', borderWidth=2)
-    drawLabel(label, x + w//2, y + h//2, size=18, fill='lime', bold=True)
-
-def pointInRect(x, y, rect):
-    rx, ry, rw, rh = rect
-    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
-
+    
+    #fun drawings 
+    drawLeftBasket(app)
+    drawRightBasket(app)
+    drawBurger(app)
 
 def drawBasket(app):
     bagWidth, bagHeight = 200, 220
@@ -176,7 +171,6 @@ def drawBasket(app):
         drawLine(basketLeft, basketTop + i*0.8, basketLeft + basketWidth, basketTop + i*0.8, opacity = 80, fill = 'lightGrey')
     drawRect(basketCenterX, basketCenterY, basketWidth, basketHeight, fill=None, border='gray', borderWidth=5, align='center')
 
-
 def drawBag(app):
     bagLeft = app.width//2
     bagTop = app.height//2 + 50
@@ -190,7 +184,7 @@ def drawBag(app):
     # Position the oval so that it overlaps half with the fries bag
     ovalX = bagLeft  # Centered horizontally under the bag
 
-    # Draw the oval (plate, shadow, or visual effect)
+    # Draw the plate 
     drawOval(ovalX, 618, ovalWidth, ovalHeight, fill='slateGray', border='black', borderWidth = 4)
 
     drawRect(bagLeft, bagTop, bagWidth, bagHeight, 
@@ -199,6 +193,103 @@ def drawBag(app):
               bagLeft, bagTop, size = 15,  align = 'center', bold = True)
     drawLabel(f"in the bag", 
               bagLeft, bagTop + 20, size = 15, align = 'center', bold = True)
-    
+
+# HELPER
+def drawButton(rect, label):
+    x, y, w, h = rect
+    drawRect(x, y, w, h, fill='green', border='darkGreen', borderWidth=2)
+    drawLabel(label, x + w//2, y + h//2, size=18, fill='lime', bold=True)
+
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
+  
     
 
+
+# DECOR 
+
+def drawBurger(app):
+    centerX = app.width // 4
+    baseY = app.height // 2 + 130
+
+    # Bottom bun
+    drawOval(centerX, baseY, 100, 50, fill='burlywood', border='saddleBrown', borderWidth=2)
+
+    # Patty
+    drawRect(centerX, baseY - 25, 100, 20, fill='sienna', align='center', border='black')
+
+    # Cheese
+    drawPolygon(centerX - 50, baseY - 35, centerX, baseY - 50, centerX + 50, baseY - 35,
+                centerX, baseY - 20, fill='gold', border='goldenrod')
+
+    # Lettuce
+    drawOval(centerX, baseY - 55, 110, 20, fill='darkGreen', opacity=70)
+
+    # Top bun
+    drawOval(centerX, baseY - 80, 120, 50, fill='burlywood', border='saddleBrown', borderWidth=2)
+
+    #Stick through bun 
+    drawLine(centerX, baseY-80, centerX, baseY - 120, fill = 'red', lineWidth = 4)
+
+
+
+def drawLeftBasket(app):
+    bagWidth, bagHeight = 200, 220
+    bagCenterY = app.height // 2 - 70  # Same vertical placement as main basket
+
+    basketWidth = bagWidth + 80
+    basketHeight = 50
+
+    basketBottom = bagCenterY - bagHeight // 2 - 50
+    basketTop = basketBottom - basketHeight
+    basketCenterY = (basketTop + basketBottom) // 2
+
+    basketCenterX = app.width // 5  # 20% of screen width
+    basketLeft = basketCenterX - basketWidth // 2
+
+    oilHeight = basketHeight // 2
+    oilCenterY = basketCenterY + oilHeight // 2
+
+    drawRect(basketCenterX, oilCenterY, basketWidth, oilHeight,
+             fill='white', align='center')
+    drawRect(basketCenterX, oilCenterY, basketWidth, oilHeight,
+             fill='yellow', opacity=40, align='center')
+
+    for i in range(1, basketHeight, 15):
+        drawLine(basketLeft, basketTop + i * 0.8,
+                 basketLeft + basketWidth, basketTop + i * 0.8,
+                 opacity=80, fill='lightGrey')
+
+    drawRect(basketCenterX, basketCenterY, basketWidth, basketHeight,
+             fill=None, border='gray', borderWidth=5, align='center')
+
+def drawRightBasket(app):
+    bagWidth, bagHeight = 200, 220
+    bagCenterY = app.height // 2 - 70  # Same vertical alignment
+
+    basketWidth = bagWidth + 80
+    basketHeight = 50
+
+    basketBottom = bagCenterY - bagHeight // 2 - 50
+    basketTop = basketBottom - basketHeight
+    basketCenterY = (basketTop + basketBottom) // 2
+
+    basketCenterX = app.width * 4 // 5
+    basketLeft = basketCenterX - basketWidth // 2
+
+    oilHeight = basketHeight // 2
+    oilCenterY = basketCenterY + oilHeight // 2
+
+    drawRect(basketCenterX, oilCenterY, basketWidth, oilHeight,
+             fill='white', align='center')
+    drawRect(basketCenterX, oilCenterY, basketWidth, oilHeight,
+             fill='yellow', opacity=40, align='center')
+
+    for i in range(1, basketHeight, 15):
+        drawLine(basketLeft, basketTop + i * 0.8,
+                 basketLeft + basketWidth, basketTop + i * 0.8,
+                 opacity=80, fill='lightGrey')
+
+    drawRect(basketCenterX, basketCenterY, basketWidth, basketHeight,
+             fill=None, border='gray', borderWidth=5, align='center')
