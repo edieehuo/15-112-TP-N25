@@ -68,7 +68,7 @@ def drawPercentage(app, barX, barY):
 def drawStepsLeft(app):
     stepsLeft = app.time - app.currDec
     color = 'red' if stepsLeft == 0 else 'black'
-    drawLabel(f"Steps Left: {stepsLeft} ", app.left + app.border, app.top + 100, 
+    drawLabel(f"Months Left: {stepsLeft} ", app.left + app.border, app.top + 100, 
               size=15, align = 'left', fill=color)
 
 

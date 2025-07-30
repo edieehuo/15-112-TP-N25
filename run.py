@@ -79,7 +79,7 @@ def run_onKeyPress(app, key):
         if key == 'enter' or key == 'space':
             print('REACHED: run_onKeyPress')
             app.player.money += app.hamsterMoneyAdd # Increase money by 2 for each run
-            app.log.insert(0,"Made $2000 At Work")
+            app.log.insert(0,"+$2000 Work")
             setActiveScreen('decision') 
     else:
         pass 
