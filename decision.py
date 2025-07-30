@@ -34,6 +34,10 @@ def decision_onScreenActivate(app):
     buttonY = 230  # just below the market graph
 
     app.showStockButton = (buttonX, buttonY, buttonW, buttonH)
+
+    app.tipsVisible = False
+    app.tipsButton = (app.width - 175, 30, 100, 30)  # (x, y, width, height)
+
     pass
 
 def decision_redrawAll(app):   
@@ -44,9 +48,12 @@ def decision_redrawAll(app):
     
     #DRAWING TRACKER 
     tracker_redrawAll(app)  
-    investmentTracker_redrawAll(app)  
+    # investmentTracker_redrawAll(app)  
     
     drawSmallButton(app.showStockButton, "Show New Stock Info")
+    drawSmallButton(app.tipsButton, "Toggle Tips")
+    if app.tipsVisible:
+        drawTips(app)
 
     if app.drawStockInfo:
         drawNewStockAvail(app)
@@ -82,7 +89,8 @@ def decision_onMousePress(app, mouseX, mouseY):
     if app.time - app.currDec == 0:
         setActiveScreen('end') # If time runs out, go to end screen
         return #this doesn't let u keep on going 
-
+    if pointInRect(mouseX, mouseY, app.tipsButton):
+        app.tipsVisible = not app.tipsVisible
     # Check if the mouse click is within the bounds of any box and set active 
     boxWidth = 150
     boxHeight = 50
@@ -124,3 +132,27 @@ def updatePortfolioPrices(app):
         newPrice =  math.ceil(price*(1+((app.marketCond/100)*vol)))
         numHeld =  app.playerPortfolio.stocks[(price,vol)]['numHeld'] 
         app.playerPortfolio.stocks[(price,vol)]['newValue'] = newPrice * numHeld
+
+def drawTips(app):
+    boxX = app.width - 200
+    boxY = 100
+    boxWidth = 150
+    boxHeight = 300
+
+    drawRect(boxX, boxY, boxWidth, boxHeight, fill='black', border='lime')
+
+    tips = [
+        "I hate the wheel.",
+        "No steps taken ",
+        "from checking",
+        "investments...",
+        "Stock market is",
+        "low(ER)",
+        "risk",
+        "gambling.",
+    ]
+
+    padding = 15
+    for i in range(len(tips)):
+        drawLabel(tips[i], boxX + padding, boxY + padding + i*30,
+                  size=14, fill='white', align='left')

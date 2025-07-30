@@ -1,12 +1,12 @@
 import sys
 from cmu_graphics import *
-#--- Tracker Screen --------------------------------------------------------------------------------------
+
 '''Draw on every screen while game is active to show player info, time left, and money.'''
 def tracker_redrawAll(app):
 
     # Background box for the log
     boxX = 0
-    boxY = 0
+    boxY = 100
     boxWidth = 200
     boxHeight = app.height
     drawRect(boxX, boxY, boxWidth, boxHeight, fill='black')
@@ -92,7 +92,7 @@ def drawPercentage(app, barX, barY):
                 fill='red', align='left', size=15)
 
 def drawActivityLog(app):
-    distFromTracker = 300
+    distFromTracker = 450
     drawLabel("Transaction Log:", app.left + app.border, app.top + distFromTracker, 
               fill = 'lime', size=20, align='left', bold=True)
     for i in range(len(app.log)):
