@@ -17,16 +17,16 @@ def info_redrawAll(app):
         drawLabel("Note:", 
                   app.width/2, ruleCenter - lineHeight,
                   fill = 'yellow', size = 30, bold = True)
-        drawLabel("You are a fast food worker who has three options to make money.", 
+        drawLabel("You are a fast food worker with three ways of making money.", 
                   app.width/2, ruleCenter,
                   fill = 'grey', size = 24, bold = True)
         drawLabel("Work quietly at your job, gamble, or invest in the stock market.", 
                   app.width/2, ruleCenter + lineHeight,
                   fill = 'grey', size = 24, bold = True)
-        drawLabel("Make your choice carefully at each turn. No redos possible.", 
+        drawLabel("Make your choice carefully at each turn.", 
                   app.width/2,ruleCenter + 2*lineHeight,
                   fill = 'grey', size = 24, bold = True)
-        drawLabel("Best of luck.", 
+        drawLabel("Tip: You can backtrack from an investment choice.", 
                   app.width/2,ruleCenter + 3*lineHeight,
                   fill = 'grey', size = 24, bold = True)
 

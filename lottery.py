@@ -8,7 +8,9 @@ def lottery_onScreenActivate(app):
     app.hasGambled = False 
     app.gambledMoney = 0
     app.gambleInput = ''
+
     app.gambleBox = (app.width/2, app.height - 200, 140, 80)
+
     app.showResult = False
     app.resultText = ''
 
@@ -28,7 +30,7 @@ def lottery_onScreenActivate(app):
 def lottery_redrawAll(app):
     # drawLabel("Lottery Screen", app.width/2, 20, size=40, bold=True)
     #draw bg 
-    drawRect(0,0, app.width, app.height, fill = 'darkRed')
+    drawRect(0,0, app.width, app.height, fill = 'black')
     drawDecor(app)
 
     #draw tracker 
@@ -116,11 +118,35 @@ def lottery_onMousePress(app, mouseX, mouseY):
                     app.player.money -= app.gambledMoney
                     spinSpinner(app)
                 else:
-                    app.resultText = "Invalid bet amount!"
-                    app.showResult = True 
+                    resetApp(app)
             else:
-                app.resultText = "Enter a number first!"
-                app.showResult = True 
+                resetApp(app)
+
+def resetApp(app):
+    app.hasGambled = False 
+    app.gambledMoney = 0
+    app.gambleInput = ''
+
+    app.gambleBox = (app.width/2, app.height - 200, 140, 80)
+    
+    app.showResult = False
+    app.resultText = ''
+
+    app.options = [0, 0.5, 1, 2, 5]  # Multipliers
+    app.spinnerLabels = ['>:)' , ':|', ':}', ' :D', ':)']
+    app.colors = ['red', 'orange', 'purple', 'blue','green']
+
+    app.selectedMultiplier = None
+    app.numSections = len(app.options)
+    app.spinnerAngle = 0
+    app.spinnerSpeed = 0
+    app.spinning = False
+    app.wheelX = app.width / 2 
+    app.wheelY = app.height / 2 
+    app.wheelRad = 160
+
+
+
 
 #DRAW FUNCTIONS -----------------------------------------------------------------------------------------------------
 
@@ -155,7 +181,7 @@ def drawGambleButton(app):
 def drawDecor(app):
     drawRect(0,0, app.width, app.height, fill = 'black', opacity = 20)
 
-    drawLine(200,0,200,app.height, fill = 'yellow', lineWidth = 10)
+    # drawLine(200,0,200,app.height, fill = 'yellow', lineWidth = 10)
     drawCircle(0,0, app.width, fill = None, border = 'yellow')
     drawCircle(15,0, app.width, fill = None, border = 'orangeRed', borderWidth = 3)
     drawCircle(40,0, app.width, fill = None, border = 'maroon', borderWidth = 5)

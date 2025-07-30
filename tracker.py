@@ -9,7 +9,7 @@ def tracker_redrawAll(app):
     boxY = 0
     boxWidth = 200
     boxHeight = app.height
-    drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey')
+    drawRect(boxX, boxY, boxWidth, boxHeight, fill='black')
 
     # Set padding inside the box
     padding = 20
@@ -17,14 +17,37 @@ def tracker_redrawAll(app):
     x = boxX + padding
     y = boxY + padding
 
+    charWidth = 13
     # Labels
-    drawLabel(f"Player: {app.player.name}", x, y, size=15, align='left')
-    drawLabel(f"Savings: ${app.player.money}", x, y + lineHeight, size=15, align='left')
-    drawLabel(f"Goal: ${app.player.moneyGoals}", x, y + 2 * lineHeight, size=15, align='left')
-    drawLabel(f"Your Stats:", x, 140, size=15, align='left', bold = True)
+    drawLabel(f"Player:", 
+              x, y, 
+              fill = 'lime', size=20, align='left', bold = True)
+    drawLabel(f"{app.player.name}", 
+              x+len('Player:')*charWidth, y, 
+              fill = 'white', size=15, align='left', font = 'monospace', bold= True )
+    drawLabel(f"Savings:" , 
+              x, y + lineHeight, 
+              fill = 'lime', size=20, align='left', bold = True)
+    drawLabel(f"${app.player.money}", 
+              x+len('Savings:')*charWidth, y + lineHeight,
+              fill = 'white', size=15, align='left', font = 'monospace', bold= True )
+    drawLabel(f"Goal:" , 
+              x, y + 2*lineHeight, 
+              fill = 'lime', size=20, align='left', bold = True)
+    drawLabel(f"${app.player.moneyGoals}", 
+              x+len('Goal:')*charWidth, y + 2*lineHeight,
+              fill = 'white', size=15, align='left', font = 'monospace', bold= True )
 
-    #Steps Left 
-    drawStepsLeft(app)
+    #draw Steps Left 
+    stepsLeft = app.time - app.currDec
+    color = 'red' if stepsLeft < 3 else 'white'
+
+    drawLabel(f"Months Left: {stepsLeft}", x, y + 3*lineHeight, 
+              size=20, bold = True, align = 'left', fill= 'lime')
+    
+    drawLabel(f"Progress:", 
+              x, y + 4*lineHeight, 
+              fill = 'lime',size=20, align='left', bold = True)
 
     # Percentage bar
     drawPercentage(app, x, y + 5 * lineHeight)
@@ -44,18 +67,21 @@ def drawPercentage(app, barX, barY):
         drawRect(barX, barY, barWidth * percent, barHeight, fill='green', align = 'left', border = 'black')
 
     # Label below bar
-    drawLabel(f"{int(percent * 100)}% Made", barX, barY + barHeight + 20, align='left', size=15, bold = True)
-    drawLabel(f"${app.player.money} / ${app.player.moneyGoals}", barX, barY + barHeight + 40, align='left', size=15)
+    drawLabel(f"{int(percent * 100)}% Made", 
+              barX, barY + barHeight + 20, 
+              fill = 'white', align='left', size=15, bold = True)
+    drawLabel(f"${app.player.money} / ${app.player.moneyGoals}", barX, barY + barHeight + 40, 
+              fill = 'white', align='left', size=15)
+    
     # Label for money left to go
     moneyLeftToGo = app.player.moneyGoals - app.player.money
     moneyMsg = abs(moneyLeftToGo)
 
     labelY = barY + barHeight + 60
-
     if moneyLeftToGo < 0:
         # Goal exceeded
         drawLabel(f"+${moneyMsg}", barX, labelY,
-                fill='green', align='left', size=15)
+                fill='lime', align='left', size=15)
     elif moneyLeftToGo == 0:
         # Goal achieved
         drawLabel(f"Goal Achieved!", barX, labelY,
@@ -65,16 +91,11 @@ def drawPercentage(app, barX, barY):
         drawLabel(f"-${moneyMsg}", barX, labelY,
                 fill='red', align='left', size=15)
 
-def drawStepsLeft(app):
-    stepsLeft = app.time - app.currDec
-    color = 'red' if stepsLeft == 0 else 'black'
-    drawLabel(f"Months Left: {stepsLeft} ", app.left + app.border, app.top + 100, 
-              size=15, align = 'left', fill=color)
-
-
 def drawActivityLog(app):
     distFromTracker = 300
-    drawLabel("Your Choices:", app.left + app.border, app.top + distFromTracker, size=15, align='left', bold=True)
+    drawLabel("Transaction Log:", app.left + app.border, app.top + distFromTracker, 
+              fill = 'lime', size=20, align='left', bold=True)
     for i in range(len(app.log)):
         entry = app.log[i]
-        drawLabel(f"{entry}", app.left + app.border, app.top + distFromTracker + (i + 1) * 20, size=15, align='left')
+        drawLabel(f"{entry}", app.left + app.border, app.top + distFromTracker + (i + 1) * 20, 
+                  fill = 'white', size=15, align='left')

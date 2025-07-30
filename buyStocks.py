@@ -15,7 +15,7 @@ def buyStocks_redrawAll(app):
     drawLabel("BUY STOCKS SCREEN", app.width / 2, 10, size=40, bold=True)
     # If buyStockNum is None, prompt the user to input a number
     if app.buyStockNum is None:
-        drawLabel("You can buy between 0-9 stocks.",  app.width // 2, app.height // 2, size=30, align='center')
+        drawLabel("You can buy between 1-9 stocks.",  app.width // 2, app.height // 2, size=30, align='center')
         drawLabel("How many do you want to buy?", app.width // 2, app.height // 2 + 40, size=30, align='center')
     else:
         drawLabel(f'Number of stocks to buy: {app.buyStockNum}', app.width / 2, app.height / 2, size=20, bold=True)
@@ -26,7 +26,7 @@ def buyStocks_redrawAll(app):
         drawLabel(f'Cannot afford to buy {app.buyStockNum} stocks.', app.width / 2, app.height / 2 + 80, size=20, bold=True)
 
 def buyStocks_onKeyPress(app, key):
-    if key.isdigit():  # Check if the key pressed is a digit (number)
+    if key.isdigit() and key != '0':  # Check if the key pressed is a digit (number)
         app.buyStockNum = int(key)
         app.tooBroke = False 
 

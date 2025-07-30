@@ -18,13 +18,12 @@ from tracker import *
 
 def playerHoldingTracker_redrawAll(app):
     boxX = 200 # right edge of tracker 
-    boxY = 700 #where to stop 
+    boxY = 110 
     boxWidth = 600 #width from right edge of tracker to left edge of investment 
-    boxHeight = app.height - boxY #until bottom
+    boxHeight = 200
 
-    drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey')
-    drawLine(boxX, 0, boxX, app.height, fill = 'white')
-    drawLine(boxX + boxWidth, 0, boxX + boxWidth, app.height, fill = 'white')
+    #DEBUGGING HELP 
+    # drawRect(boxX, boxY, boxWidth, boxHeight, fill='grey')
 
     marketPlotX = boxX
     marketPlotY = boxY
@@ -46,21 +45,26 @@ def drawMarketPlot(app, boxX, boxY, boxWidth, boxHeight):
     dataPoints = len(app.marketCondHistory)
     
     if dataPoints == 1:
-        # If there's only one data point, just draw a marker at the position of that point
-        stepInterval = app.time  # Number of fixed intervals
-        x = boxX + 10 
-        y = boxY + boxHeight - ((app.marketCondHistory[0] - minCond) / (maxCond - minCond)) * boxHeight
-        
-        # Draw a circle (marker) for the single data point
-        drawCircle(x, y, 5, fill='white')  # Adjust size of the marker (radius = 5)
-        drawLabel(f"{dataPoints}", x, y, fill='white')  # Adjust size of the marker (radius = 5)
-
-        #Draw box around: 
-        drawRect(boxX, boxY, boxWidth, boxHeight, fill = None, border = 'black')
+        pass 
     else:
+        drawLabel(f"Current Market Condition", app.width/2, 55, 
+              fill = 'lime', bold = True, size = 20)
+        labelX = app.width//2
+        labelY = 80
+        if app.marketCond > 0:
+            drawLabel(f"{app.marketCond}",
+                    labelX, labelY, 
+                    size=15, align = 'left', bold = True, fill = 'red')
+        if app.marketCond <= 0:
+            drawLabel(f"{app.marketCond}",
+                    labelX, labelY,
+                    size=15, align = 'left', bold = True, fill = 'green')
+
+
+
+
         # Draw the line plot for multiple data points
         stepInterval = app.time  # Number of fixed intervals
-        
         for i in range(1, dataPoints):
             # Calculate x based on fixed intervals
             x1 = boxX + (i - 1) * (boxWidth / stepInterval)
@@ -69,20 +73,25 @@ def drawMarketPlot(app, boxX, boxY, boxWidth, boxHeight):
             y2 = boxY + boxHeight - ((app.marketCondHistory[i] - minCond) / (maxCond - minCond)) * boxHeight
 
             # Draw the line between the two points
-            drawLine(x1, y1, x2, y2, fill='black')
-            # drawCircle(x2, y2, 7, fill='white')  # Adjust size of the marker (radius = 5)
+            drawLine(x1, y1, x2, y2, fill='white')
 
+            drawCircle(x2, y2, 7, fill='darkGrey')  # Circle behind the value
+            drawCircle(x2, y2, 5, fill='black')  # Main circle (marker)
 
-            #Draw Circle at each point
-            # drawCircle(x1, y1, 7, fill='darkGreen')  # Adjust size of the marker (radius = 5)
-            drawLabel(f"{app.marketCondHistory[i]}", x2, y2, fill='lime')
+            drawLabel(f"{app.marketCondHistory[i]}", x2, y2, size = 10, bold = True, fill='lime')
 
-            # Draw around plot 
-            drawRect(boxX, boxY, boxWidth, boxHeight, fill = None, border = 'black')
+        # Draw the vertical axis line on the left side
+        axisX = boxX  # Position of the axis line (at the left side of the box)
+        axisYStart = boxY  # Starting point for the axis (at the bottom of the box)
+        axisYEnd = boxY + boxHeight  # Ending point for the axis (at the top of the box)
+        drawLine(axisX, axisYStart, axisX, axisYEnd, fill='white', lineWidth=2)
+        drawLine(axisX, 160, axisX + boxWidth,160, fill='white', lineWidth=2, dashes= True)
+        drawLine(axisX + boxWidth, axisYStart, axisX + boxWidth, axisYEnd, fill='white', lineWidth=2)
+
 
 def drawPortfolio(app): 
     boxX = 200 # right edge of tracker 
-    boxY = 700 #where to stop 
+    boxY = 550 #where to stop 
 
     marketPlotX = boxX
     marketPlotY = boxY
@@ -94,12 +103,13 @@ def drawPortfolio(app):
     # print(app.playerPortfolio)
     # print(app.playerPortfolio.numDiffStocks)
     if app.playerPortfolio.numDiffStocks == 0: 
-        # print('skipping in drawPort since drawPort is empty ')
         return 
     else: 
+        drawLabel(f"Your Holdings:", boxX + 20, 635, 
+              fill = 'lime', bold = True, size = 20, align = 'left')
         i = 0
         iToMod = 0
-        stockSpacing = 15
+        stockSpacing = 18
         stockColSpacing = 20
         stockColPadding = 20
         priceToSellPriceSpacing = 150
@@ -112,25 +122,26 @@ def drawPortfolio(app):
             else:
                 sellPrice = 'No Stocks Held'
             # print('drawPort buy', buyPrice)
-            distBottomScreen = 10
+            distBottomScreen = 40
             if holdY + i*stockSpacing <= app.height - distBottomScreen:
                 iToMod += 1
                 drawLabel(f"{i}: Buy Price ${buyPrice}", 
                           holdX + stockColPadding, 
-                          holdY + i*stockSpacing, align = 'left',  
+                          holdY + i*stockSpacing, align = 'left',  fill = 'lime',
                           size = 15)
                 drawLabel(f"Market Price ${sellPrice}", 
                           holdX + stockColPadding + priceToSellPriceSpacing, 
-                          holdY + i*stockSpacing, align = 'left', 
+                          holdY + i*stockSpacing, align = 'left', fill = 'white',
                           size = 15)
             else: 
                 drawLabel(f"{i}: Buy Price ${buyPrice}", 
                           holdX + stockColPadding*2 + stockColSpacing*3 + priceToSellPriceSpacing*2, 
-                          holdY + (i%iToMod)*stockSpacing, align = 'left', 
+                          holdY + (i%iToMod)*stockSpacing, 
+                          fill = 'lime', align = 'left', 
                           size = 15)
                 drawLabel(f"Market Price ${sellPrice}", 
                           holdX + stockColPadding*2 + stockColSpacing*4 + priceToSellPriceSpacing*3, 
-                          holdY + (i%iToMod)*stockSpacing, align = 'left', 
+                          holdY + (i%iToMod)*stockSpacing, fill = 'white', align = 'left', 
                           size = 15)
 
     pass 

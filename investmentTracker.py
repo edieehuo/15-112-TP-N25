@@ -19,20 +19,25 @@ def investmentTracker_redrawAll(app):
     lineHeight = 30
 
     #Draw Market Conditions 
-    drawLabel(f"Current Market Condition:",
-                   boxX + 5, boxY + padding, size=15, align = 'left', bold = True, fill = 'blue')
-    if app.marketCond > 0:
-        drawLabel(f"{app.marketCond}",
-                boxX + 5, boxY + padding + 23, size=15, align = 'left', bold = True, fill = 'red')
-    if app.marketCond <= 0:
-        drawLabel(f"{app.marketCond}",
-                boxX + 5, boxY + padding + lineHeight, size=15, align = 'left', bold = True, fill = 'green')
+    # labelX = app.width//2
+    # labelY = 80
+    # if app.marketCond > 0:
+    #     drawLabel(f"{app.marketCond}",
+    #             labelX, labelY, 
+    #             size=15, align = 'left', bold = True, fill = 'red')
+    # if app.marketCond <= 0:
+    #     drawLabel(f"{app.marketCond}",
+    #             labelX, labelY,
+    #             size=15, align = 'left', bold = True, fill = 'green')
     
     # Draw Stock Info 
-    drawLabel(f"Stock Avail. To Buy", boxX + 5, boxY + padding + 40, align = 'left', bold = True, fill = 'green', size = 15)
+    drawLabel(f"Stock Avail. To Buy", boxX + 5, boxY + padding + 40, 
+              align = 'left', bold = True, fill = 'green', size = 15)
     if app.drawStockInfo:        
-        drawLabel(f"Key S To Hide Stock Info", boxX + 5, boxY + padding + 2 * lineHeight, size=15, align = 'left', bold = True, fill = 'blue')
-        drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", boxX + 10, 100, size=15, align = 'left')
+        drawLabel(f"Key S To Hide Stock Info", boxX + 5, boxY + padding + 2 * lineHeight, 
+                  size=15, align = 'left', bold = True, fill = 'blue')
+        drawLabel(f"Stock Price: ${app.stockInfo.stockPrice}", boxX + 10, 100,
+                  size=15, align = 'left')
         drawLabel(f"Stock Volatility: {app.stockInfo.stockVolatility}%", boxX + 10, 120,size=15, align = 'left')
     if not app.drawStockInfo:
         drawLabel(f"Key S To Show Stock Info", boxX + 5, boxY + padding + 2 * lineHeight, size=15, align = 'left',  bold = True, fill = 'blue')

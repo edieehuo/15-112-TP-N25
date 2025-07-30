@@ -15,7 +15,6 @@ from hamster import *
 from run import *
 
 #GAMBLING IMPORTS
-from gambling import *
 from lottery import * 
 
 #INVESTMENT IMPORTS
@@ -86,7 +85,7 @@ def drawButton(app):
     buttonY = app.height / 2 + 80 # Position it below the game title
 
     # Draw button
-    drawRect(buttonX, buttonY, buttonWidth, buttonHeight, fill='forestGreen', border='green')
+    drawRect(buttonX, buttonY, buttonWidth, buttonHeight, fill='forestGreen', border='darkGreen', borderWidth = 4, dashes = (10, 5))
     drawLabel("Start Game", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2, size=24, bold=True, fill='lime')
 
 # Detect mouse click on the Start Game button

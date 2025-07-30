@@ -22,8 +22,7 @@ def sellStocks_onScreenActivate(app):
 def sellStocks_redrawAll(app):
     drawLabel("SELL STOCKS SCREEN", app.width / 2, 10, size=40, bold=True)
     if app.drawNothingToSell:
-        drawLabel("Your portfolio is empty!", app.width / 2, app.height / 2 - 30, size=20, align='center')
-        drawLabel("Press Enter to return to the previous screen", app.width / 2, app.height / 2, size=20, align='center')
+        drawNothingToSell(app)
     else:
         drawLabel("Which stock to sell:", app.width / 2, app.height / 2 - 50, size=20, align='center')
 
@@ -60,6 +59,15 @@ def sellStocks_redrawAll(app):
             drawLabel(f"Press 's' to sell- be certain! ", 
                       app.width / 2, app.height / 2 + 200, size=20, align='center')
 
+def drawNothingToSell(app):
+    #draw bg 
+    drawRect(0,0, app.width, app.height, fill = 'black')
+    drawLabel("Portfolio is empty.", 
+              app.width / 2, app.height / 2 - 30, 
+              fill = 'lime', bold = True, size=20, align='center')
+    drawLabel("Press Enter to return to Stock Market", 
+              app.width / 2, app.height / 2, 
+              fill = 'white', bold = True, size=20, align='center')
 
 def sellStocks_onKeyPress(app, key):
     if app.drawNothingToSell:
