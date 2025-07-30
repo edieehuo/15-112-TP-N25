@@ -17,8 +17,6 @@ def investmentTracker_redrawAll(app):
     # Set padding inside the box
     padding = 20
     lineHeight = 30
-    x = boxX + padding
-    y = boxY + padding
 
     #Draw Market Conditions 
     drawLabel(f"Current Market Condition:",

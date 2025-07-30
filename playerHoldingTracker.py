@@ -68,13 +68,13 @@ def drawMarketPlot(app, boxX, boxY, boxWidth, boxHeight):
             x2 = boxX + i * (boxWidth / stepInterval)
             y2 = boxY + boxHeight - ((app.marketCondHistory[i] - minCond) / (maxCond - minCond)) * boxHeight
 
-            #Draw Circle at each point
-            drawCircle(x2, y2, 5, fill='white')  # Adjust size of the marker (radius = 5)
-            drawLabel(f"{app.marketCondHistory[i]}", x2, y2, fill='black')
-
-
             # Draw the line between the two points
             drawLine(x1, y1, x2, y2, fill='black')
+            drawCircle(x2, y2, 5, fill='white')  # Adjust size of the marker (radius = 5)
+
+            #Draw Circle at each point
+            drawCircle(x1, y1, 5, fill='white')  # Adjust size of the marker (radius = 5)
+            drawLabel(f"{app.marketCondHistory[i]}", x2, y2, fill='black')
 
             # Draw around plot 
             drawRect(boxX, boxY, boxWidth, boxHeight, fill = None, border = 'black')
@@ -101,13 +101,34 @@ def drawPortfolio(app):
         stockSpacing = 15
         stockColSpacing = 20
         stockColPadding = 20
+        priceToSellPriceSpacing = 150
         for stock in app.playerPortfolio.stocks:
             i += 1
             buyPrice, vol = stock # don't need volatility to be drawn 
+            newTotalValue = app.playerPortfolio.stocks[stock]['newValue']
+            if app.playerPortfolio.stocks[stock]['numHeld'] != 0:
+                sellPrice = newTotalValue //  app.playerPortfolio.stocks[stock]['numHeld']
+            else:
+                sellPrice = 'No Stocks Held'
             # print('drawPort buy', buyPrice)
             if holdY + i*stockSpacing <= app.height:
                 iToMod += 1
-                drawLabel(f"{buyPrice}", holdX + stockColPadding, holdY + i*stockSpacing, size = 15)
+                drawLabel(f"Buy Price ${buyPrice}", 
+                          holdX + stockColPadding, 
+                          holdY + i*stockSpacing, align = 'left',  
+                          size = 15)
+                drawLabel(f"Market Price ${sellPrice}", 
+                          holdX + stockColPadding + priceToSellPriceSpacing, 
+                          holdY + i*stockSpacing, align = 'left', 
+                          size = 15)
             else: 
-                drawLabel(f"{buyPrice}", holdX + stockColPadding + stockColSpacing, holdY + (i%iToMod)*stockSpacing, size = 15)
+                drawLabel(f"Buy Price ${buyPrice}", 
+                          holdX + stockColPadding + stockColSpacing, 
+                          holdY + (i%iToMod)*stockSpacing, align = 'left', 
+                          size = 15)
+                drawLabel(f"Market Price Price ${sellPrice}", 
+                          holdX + stockColPadding + stockColSpacing + priceToSellPriceSpacing, 
+                          holdY + (i%iToMod)*stockSpacing, align = 'left', 
+                          size = 15)
+
     pass 
