@@ -132,7 +132,7 @@ def updatePortfolioPrices(app):
         app.playerPortfolio.stocks[(price,vol)]['newValue'] = newPrice * numHeld
 
 def drawTips(app):
-    boxX = app.width - 200
+    boxX = app.width - 180
     boxY = 100
     boxWidth = 150
     boxHeight = 300
@@ -140,7 +140,8 @@ def drawTips(app):
     drawRect(boxX, boxY, boxWidth, boxHeight, fill='black', border='lime')
 
     tips = [
-        "I hate the wheel.",
+        "I hate going",
+         "to work",
         "No steps taken ",
         "from checking",
         "investments...",
@@ -153,4 +154,4 @@ def drawTips(app):
     padding = 15
     for i in range(len(tips)):
         drawLabel(tips[i], boxX + padding, boxY + padding + i*30,
-                  size=14, fill='white', align='left')
+                  size=14, fill='white', align='left', font = 'monospace', bold = True)

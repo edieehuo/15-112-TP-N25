@@ -80,8 +80,8 @@ def canBuy(app):
 
 def drawButton(rect, label):
     x, y, w, h = rect
-    drawRect(x, y, w, h, fill='dimGrey', border='white', borderWidth=2)
-    drawLabel(label, x + w // 2, y + h // 2, size=14, fill='white', bold=True)
+    drawRect(x, y, w, h, fill='green', border='darkGreen', dashes= True, borderWidth=2)
+    drawLabel(label, x + w // 2, y + h // 2, size=14, fill='lime', bold=True)
 
 def pointInRect(x, y, rect):
     rx, ry, rw, rh = rect
