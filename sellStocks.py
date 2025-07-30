@@ -27,6 +27,8 @@ def sellStocks_redrawAll(app):
     else:
         drawLabel("Which stock to sell:", app.width / 2, app.height / 2 - 50, size=20, align='center')
 
+        #draw Portfolio 
+        drawPortfolio(app)
         allStockTuples = app.playerPortfolio.getAllStockTuplesInList()
         stockList = list(app.playerPortfolio.stocks.items())
         print('sellStocks: redrawAll portfolio', app.playerPortfolio)
@@ -117,3 +119,59 @@ def sellStocks_onKeyPress(app, key):
     
     else:
         pass  
+
+
+def drawPortfolio(app): 
+    boxX = 200 # right edge of tracker 
+    boxY = 700 #where to stop 
+
+    marketPlotX = boxX
+    marketPlotY = boxY
+    #variable 
+    marketPlotHeight = 100
+
+    holdX = marketPlotX
+    holdY = marketPlotY + marketPlotHeight
+    # print(app.playerPortfolio)
+    # print(app.playerPortfolio.numDiffStocks)
+    if app.playerPortfolio.numDiffStocks == 0: 
+        # print('skipping in drawPort since drawPort is empty ')
+        return 
+    else: 
+        i = 0
+        iToMod = 0
+        stockSpacing = 15
+        stockColSpacing = 20
+        stockColPadding = 20
+        priceToSellPriceSpacing = 150
+        for stock in app.playerPortfolio.stocks:
+            i += 1
+            buyPrice, vol = stock # don't need volatility to be drawn 
+            newTotalValue = app.playerPortfolio.stocks[stock]['newValue']
+            if app.playerPortfolio.stocks[stock]['numHeld'] != 0:
+                sellPrice = newTotalValue //  app.playerPortfolio.stocks[stock]['numHeld']
+            else:
+                sellPrice = 'No Stocks Held'
+            # print('drawPort buy', buyPrice)
+            distBottomScreen = 10
+            if holdY + i*stockSpacing <= app.height - distBottomScreen:
+                iToMod += 1
+                drawLabel(f"{i}: Buy Price ${buyPrice}", 
+                          holdX + stockColPadding, 
+                          holdY + i*stockSpacing, align = 'left',  
+                          size = 15)
+                drawLabel(f"Market Price ${sellPrice}", 
+                          holdX + stockColPadding + priceToSellPriceSpacing, 
+                          holdY + i*stockSpacing, align = 'left', 
+                          size = 15)
+            else: 
+                drawLabel(f"{i}: Buy Price ${buyPrice}", 
+                          holdX + stockColPadding*2 + stockColSpacing*3 + priceToSellPriceSpacing*2, 
+                          holdY + (i%iToMod)*stockSpacing, align = 'left', 
+                          size = 15)
+                drawLabel(f"Market Price ${sellPrice}", 
+                          holdX + stockColPadding*2 + stockColSpacing*4 + priceToSellPriceSpacing*3, 
+                          holdY + (i%iToMod)*stockSpacing, align = 'left', 
+                          size = 15)
+
+    pass 

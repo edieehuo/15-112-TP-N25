@@ -10,21 +10,31 @@ def spawn_onScreenActivate(app):
 
 def spawn_redrawAll(app):
     drawLabel("Spawning Screen", app.width/2, 10, size=40, bold=True)
-    drawLabel("Enter Player Name:", app.width/2, app.height/2 - 50)
-    drawLabel(app.name, app.width/2, app.height/2, size=50, bold = True)
+    # background 
+    drawRect(0,0, app.width, app.height, fill = 'black')
+
+    drawLabel("Enter Player Name:", 
+              app.width/2, app.height/2 - 50, 
+              fill = 'green', size = 24, bold = True )
+    drawLabel(app.name, 
+              app.width/2, app.height/2 + 10, 
+              size=24, bold = True, fill = 'white', font = 'monospace')
     
     nameLength = len(app.name)
-    charWidth = 30  #width of char
+    charWidth = 20  #width of char
     lineWidth = nameLength * charWidth 
 
     drawLine(app.width/2 - lineWidth/2, app.height/2 + 50,
             app.width/2 + lineWidth/2, app.height/2 + 50,
-            fill='black')
+            fill='white')
     
-    drawLabel("Press 'Space' or 'Enter' to Continue", app.width/2, app.height/2 + 100)
+    if app.name: 
+        drawLabel(" Press Enter To Continue", 
+                app.width/2, app.height/2 + 100,
+                fill = 'green', size = 24, bold = True)
 
 def spawn_onKeyPress(app, key):
-    if key == 'enter' or key == 'space':
+    if key == 'enter':
         # Generate goalmoney, starting money, number of "years" they have 
         app.moneyGoals = random.randint(10, 100)*1000
         app.money = random.randint(int(app.moneyGoals * 0.2), int(app.moneyGoals * 0.5))

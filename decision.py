@@ -19,8 +19,8 @@ def decision_onScreenActivate(app):
 
     #market condition random generation that uniformly affects newValue of EVERY stock
     #initializes without this app.marketCond when buyer just buys something
-    app.lowMarketCond = -10
-    app.highMarketCond = 25
+    app.lowMarketCond = -15
+    app.highMarketCond = 15
     app.marketCond = random.randint(app.lowMarketCond,app.highMarketCond)
     updatePortfolioPrices(app)
 

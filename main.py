@@ -66,11 +66,38 @@ def start_onScreenActivate(app):
 
 
 def start_redrawAll(app):
-    drawLabel("Baby 2 Billionaire", app.width/2, app.height/2, size=40, bold=True)
-    drawLabel("Press any key to start", app.width/2, app.height/2 + 50)
+    # background 
+    drawRect(0,0, app.width, app.height, fill = 'black')
 
-def start_onKeyPress(app, key):
-    setActiveScreen('spawn')
+    #fonts
+    drawLabel("Baby 2 Billionaire", 
+              app.width/2, app.height/2, 
+              size=100, bold=True, fill = 'forestGreen')
+
+# Draw the Start Game button
+    drawButton(app)
+
+# Button to transition to spawn screen
+def drawButton(app):
+    buttonWidth = 200
+    buttonHeight = 50
+    buttonX = app.width / 2 - buttonWidth / 2
+    buttonY = app.height / 2 + 80 # Position it below the game title
+
+    # Draw button
+    drawRect(buttonX, buttonY, buttonWidth, buttonHeight, fill='forestGreen', border='green')
+    drawLabel("Start Game", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2, size=24, bold=True, fill='lime')
+
+# Detect mouse click on the Start Game button
+def start_onMousePress(app, mouseX, mouseY):
+    buttonWidth = 200
+    buttonHeight = 50
+    buttonX = app.width / 2 - buttonWidth / 2
+    buttonY = app.height / 2 + 80 # Position it below the game title
+
+    # Check if the mouse click is inside the button
+    if buttonX <= mouseX <= buttonX + buttonWidth and buttonY <= mouseY <= buttonY + buttonHeight:
+        setActiveScreen('spawn')  # Transition to the spawn screen
 
 
 #---Don't Touch Things Below This ---------------------------------------------------------------------------

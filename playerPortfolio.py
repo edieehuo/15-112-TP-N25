@@ -31,6 +31,8 @@ class Portfolio:
         return f'{self.stocks}'
     
     def addStock(self, stockPrice, stockVolatility, buyStockNum):
+        if self.numDiffStocks >= 14:
+            pass #nomore than 14 stocks in basket at once
         stockKey = (stockPrice, stockVolatility)
         if stockKey in self.stocks:
             self.stocks[stockKey]['numHeld'] += buyStockNum

@@ -109,7 +109,6 @@ def lottery_onKeyPress(app, key):
             setActiveScreen('decision')
 
 def lottery_onMousePress(app, mouseX, mouseY):
-    # if hasattr(app, 'gambleBox'):
     x, y, w, h = app.gambleBox
     if not app.hasGambled: 
         if (x <= mouseX <= x+w) and (y <= mouseY <= y+h):
