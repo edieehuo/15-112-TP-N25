@@ -10,7 +10,7 @@ def sellStocks_onScreenActivate(app):
     app.sellAmount = 0
     app.sellStockNum = None
     app.showHoldings = False
-    app.drawNothingToSell = (app.playerPortfolio.numDiffStocks == 0)
+    # app.drawNothingToSell = (app.playerPortfolio.numDiffStocks == 0)
 
     # Buttons
     buttonW, buttonH = 150, 35
@@ -24,12 +24,9 @@ def sellStocks_onScreenActivate(app):
 
 def sellStocks_redrawAll(app):
     drawRect(0, 0, app.width, app.height, fill='black')
-    # drawLabel("SELL STOCKS", app.width // 2, 40, size=36, fill='lime', bold=True)
-
-    if app.drawNothingToSell:
+    if len(app.playerPortfolio.stocks) == 0:
         drawNothingToSell(app)
         return
-
     # Left Panel
     infoX = 100
     infoY = 140
@@ -79,7 +76,7 @@ def drawNothingToSell(app):
     drawButton(app.returnToStocksButton, "Return to Stocks")
 
 def sellStocks_onKeyPress(app, key):
-    if app.drawNothingToSell:
+    if len(app.playerPortfolio.stocks) == 0:
         if key == 'enter':
             setActiveScreen('stocks')
         return
@@ -117,7 +114,7 @@ def sellStocks_onKeyPress(app, key):
             print("Invalid number to sell.")
 
 def sellStocks_onMousePress(app, mouseX, mouseY):
-    if app.drawNothingToSell:
+    if len(app.playerPortfolio.stocks) == 0:
         if pointInRect(mouseX, mouseY, app.returnToStocksButton):
             setActiveScreen('stocks')
         return

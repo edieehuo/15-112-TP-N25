@@ -2,7 +2,6 @@ import math
 #IMPORTS=================================================================================================
 from cmu_graphics import *
 from tracker import *  
-from investmentTracker import *
 from playerHoldingTracker import *
 from stocks import *
 #-----------------------------------------------------------------------------------------------------
@@ -48,7 +47,6 @@ def decision_redrawAll(app):
     
     #DRAWING TRACKER 
     tracker_redrawAll(app)  
-    # investmentTracker_redrawAll(app)  
     
     drawSmallButton(app.showStockButton, "Show New Stock Info")
     drawSmallButton(app.tipsButton, "Toggle Tips")
