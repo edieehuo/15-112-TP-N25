@@ -1,4 +1,3 @@
-import sys
 from cmu_graphics import *
 
 #---End Screen--------------------------------------------------------------------------------------
@@ -6,27 +5,44 @@ def end_onScreenActivate(app):
     pass
 
 def end_redrawAll(app):
-    drawLabel("End Screen", app.width/2, 10, size=40, bold=True)
-    barX = 150
-    barY = 100
-    barWidth = 500
-    barHeight = 30
-    if app.player.money >= app.player.moneyGoals:
-        drawLabel(f"You reached your goal of ${app.player.moneyGoals}!", app.width/2, app.height/2 - 20)
-        drawRect(barX, barY, barWidth, barHeight, fill='lightGreen', border ='black')
+    drawRect(0, 0, app.width, app.height, fill='black')  # Background
+
+    titleY = 80
+    drawLabel("Game Over", app.width // 2, titleY, size=48, fill='lime', bold=True)
+
+    # Money Summary
+    msgY = titleY + 60
+    goalMet = app.player.money >= app.player.moneyGoals
+
+    if goalMet:
+        drawLabel(f"Goal Reached!", app.width // 2, msgY, size=28, fill='lightGreen', bold=True)
     else:
-        drawLabel(f"You did not reach your goal of ${app.player.moneyGoals}.", app.width/2, app.height/2 - 20)
-        percent = app.player.money / app.player.moneyGoals
-        percent = min(max(percent, 0), 1)
-        drawRect(barX, barY, barWidth, barHeight, fill='red', border='black')
-        drawRect(barX, barY, barWidth * percent, barHeight, fill='lightGreen', border ='black')
-        drawLabel(f"${app.player.money} / ${app.player.moneyGoals}", app.width/2, barY + barHeight + 15)
-    pass 
-    drawLabel(f"You made a total of ${app.player.money}.", app.width/2, app.height/2 + 10)
-    drawLabel("Press 'Enter' to restart", app.width/2, app.height/2 + 70, bold=True)
+        drawLabel("You didn't reach your goal.", app.width // 2, msgY, size=28, fill='red', bold=True)
+
+    # Bar Chart Summary
+    barY = msgY + 60
+    barW, barH = 500, 30
+    barX = app.width // 2 - barW // 2
+    drawRect(barX, barY, barW, barH, fill='dimGrey', border='white')
+
+    percent = app.player.money / app.player.moneyGoals
+    percent = min(max(percent, 0), 1)
+    fillColor = 'lightGreen' if goalMet else 'orange'
+    drawRect(barX, barY, barW * percent, barH, fill=fillColor)
+
+    drawLabel(f"${app.player.money} / ${app.player.moneyGoals}", 
+              app.width // 2, barY + barH + 25, 
+              fill='white', size=16, bold=True)
+
+    # Final Message
+    drawLabel(f"You earned a total of ${app.player.money}.", 
+              app.width // 2, barY + barH + 70, 
+              fill='white', size=20)
+
+    drawLabel("Press 'Enter' to Restart", 
+              app.width // 2, app.height - 80, 
+              size=20, fill='yellow', bold=True)
 
 def end_onKeyPress(app, key):
     if key == 'enter':
         setActiveScreen('start')  # Restart the game
-    else:
-        pass  # Ignore other keys

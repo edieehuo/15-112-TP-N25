@@ -70,6 +70,12 @@ def run_onScreenActivate(app):
     app.draggingIndex = None
     app.allFriesInBag = False
 
+    #DECOR 
+
+    app.bubbles = []
+    app.stepsPerSecond = 20
+
+
 def run_onMousePress(app, mouseX, mouseY):
     for i in range(len(app.fries)-1, -1, -1):
         fry = app.fries[i]
@@ -193,7 +199,11 @@ def drawBag(app):
               bagLeft, bagTop, size = 15,  align = 'center', bold = True)
     drawLabel(f"in the bag", 
               bagLeft, bagTop + 20, size = 15, align = 'center', bold = True)
-
+    drawLabel(f"M", 
+              bagLeft, bagTop - 30, size = 40, 
+              font = 'comic sans', 
+              fill = 'yellow', align = 'center', bold = True)
+   
 # HELPER
 def drawButton(rect, label):
     x, y, w, h = rect
@@ -235,6 +245,7 @@ def drawBurger(app):
 
 
 def drawLeftBasket(app):
+    drawBubbles(app)
     bagWidth, bagHeight = 200, 220
     bagCenterY = app.height // 2 - 70  # Same vertical placement as main basket
 
@@ -265,6 +276,7 @@ def drawLeftBasket(app):
              fill=None, border='gray', borderWidth=5, align='center')
 
 def drawRightBasket(app):
+    drawBubbles(app)
     bagWidth, bagHeight = 200, 220
     bagCenterY = app.height // 2 - 70  # Same vertical alignment
 
@@ -293,3 +305,30 @@ def drawRightBasket(app):
 
     drawRect(basketCenterX, basketCenterY, basketWidth, basketHeight,
              fill=None, border='gray', borderWidth=5, align='center')
+#BUBBLES 
+
+def run_onStep(app):
+    # Occasionally create bubbles on both sides
+    if random.random() < 0.5:
+        for side in ['left', 'right']:
+            if side == 'left':
+                x = app.width // 5 + random.randint(-50, 50)
+            else:
+                x = app.width * 4 // 5 + random.randint(-50, 50)
+            y = app.height // 2 - 280  # Top of oil
+            r = random.randint(4, 10)
+            opacity = 100
+            app.bubbles.append([x, y, r, opacity])
+
+    # Animate bubbles upward and fading
+    for bubble in app.bubbles:
+        bubble[1] -= 1.5  # move up
+        bubble[3] -= 2    # fade
+
+    # Remove invisible or out-of-bound bubbles
+    app.bubbles = [b for b in app.bubbles if b[1] > app.height // 2 - 300 and b[3] > 0]
+
+def drawBubbles(app):
+    for x, y, r, _ in app.bubbles:
+        drawOval(x, y, r, r, fill='yellow', border = 'orange', opacity=60)
+        drawOval(x, y, r, r, fill='white', border = 'orange', opacity=60)

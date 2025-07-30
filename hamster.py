@@ -45,6 +45,12 @@ def hamster_onScreenActivate(app):
     app.fryDraggingIndex = None
     app.allTrainingFriesInBag = False
 
+    #DECOR 
+
+    app.stepsPerSecond = 30
+    app.bubbles = []
+    app.bubbleCounter = 0  # To stagger bubbles
+
     pass 
 
 def hamster_onMousePress(app, mouseX, mouseY):
@@ -121,6 +127,11 @@ def drawButton(rect, label):
     drawLabel(label, x + w//2, y + h//2, size=18, fill='lime', bold=True)
 
 def drawBasket(app):
+    # Draw bubbles
+    for x, y, r, _ in app.bubbles:
+        drawOval(x, y, r, r, fill='yellow', border = 'orange', opacity=60)
+        drawOval(x, y, r, r, fill='white', border = 'orange', opacity=60)
+
     bagWidth, bagHeight = 200, 220
     bagCenterX = app.width // 2
     bagCenterY = app.height // 2 - 70
@@ -172,3 +183,21 @@ def drawBag(app):
     
     
 
+#DECOR 
+def hamster_onStep(app):
+    app.bubbleCounter += 1
+    if app.bubbleCounter % 5 == 0:
+        # Add new bubble
+        basketCenterX = app.width // 2
+        bubbleX = basketCenterX + random.randint(-60, 60)
+        bubbleY = app.height // 2 - 275
+        radius = random.randint(7, 10)
+        riseSpeed = random.uniform(1, 2)
+        app.bubbles.append([bubbleX, bubbleY, radius, riseSpeed])
+
+    # Move bubbles upward
+    for bubble in app.bubbles:
+        bubble[1] -= bubble[3]  # Move y upward
+
+    # Remove offscreen bubbles
+    app.bubbles = [b for b in app.bubbles if b[1] > app.height//2 - 350]
