@@ -53,6 +53,34 @@ def hamster_onScreenActivate(app):
 
     pass 
 
+def hamster_redrawAll(app):
+    drawLabel("Hamster Screen", app.width/2, 10, size=40, bold=True)
+    # drawLabel("Press R to Run", app.width/2, app.height/2)
+
+    # background 
+    drawRect(0, 0, app.width, app.height, fill='black')
+    # tabletop
+    drawRect(0, 0, app.width, app.height / 2, fill='black')  
+    drawLine(0, app.height / 2, app.width, app.height / 2, fill='darkGray', lineWidth=3)
+    drawRect(0, app.height / 2, app.width, app.height / 2, fill='gray', opacity=20)  
+
+    for i in range(len(app.trainingFries)):
+        fry = app.trainingFries[i]
+        fry.draw(isDragging=(i == app.fryDraggingIndex))
+    drawBasket(app)
+    drawBag(app)
+    friesInBag = sum(fry.inBag for fry in app.trainingFries)
+    drawLabel(f"Fries in bag: {friesInBag}/{app.numTrainingFries}", 
+              app.width/2, 80, fill = 'yellow', size=20, bold=True)
+    if not app.allTrainingFriesInBag:
+        drawLabel(f"Click on, then drag each fry from fryer to bag. ", 
+                  app.width//2, app.height - 200, size=28, fill='yellow', bold=True, align='center')
+    if app.allTrainingFriesInBag:
+        drawLabel(f"Completed Training.", 
+                  app.width//2, app.height - 200, size=28, fill='green', bold=True, align='center')
+        drawButton(app.goToWorkButton, "Go to Work")
+
+
 def hamster_onMousePress(app, mouseX, mouseY):
     if app.allTrainingFriesInBag and pointInRect(mouseX, mouseY, app.goToWorkButton):
         setActiveScreen('run')
@@ -62,10 +90,6 @@ def hamster_onMousePress(app, mouseX, mouseY):
         if not fry.inBag and fry.containsPoint(mouseX, mouseY):
             app.fryDraggingIndex = i
             break
-
-def pointInRect(x, y, rect):
-    rx, ry, rw, rh = rect
-    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
 
 def hamster_onMouseDrag(app, mouseX, mouseY):
     if app.fryDraggingIndex is not None:
@@ -94,37 +118,9 @@ def hamster_onMouseDrag(app, mouseX, mouseY):
 
 def hamster_onMouseRelease(app, mouseX, mouseY):
     app.fryDraggingIndex = None
-def hamster_redrawAll(app):
-    drawLabel("Hamster Screen", app.width/2, 10, size=40, bold=True)
-    # drawLabel("Press R to Run", app.width/2, app.height/2)
 
-    # background 
-    drawRect(0, 0, app.width, app.height, fill='black')
-    # tabletop
-    drawRect(0, 0, app.width, app.height / 2, fill='black')  
-    drawLine(0, app.height / 2, app.width, app.height / 2, fill='darkGray', lineWidth=3)
-    drawRect(0, app.height / 2, app.width, app.height / 2, fill='gray', opacity=20)  
 
-    for i in range(len(app.trainingFries)):
-        fry = app.trainingFries[i]
-        fry.draw(isDragging=(i == app.fryDraggingIndex))
-    drawBasket(app)
-    drawBag(app)
-    friesInBag = sum(fry.inBag for fry in app.trainingFries)
-    drawLabel(f"Fries in bag: {friesInBag}/{app.numTrainingFries}", 
-              app.width/2, 80, fill = 'yellow', size=20, bold=True)
-    if not app.allTrainingFriesInBag:
-        drawLabel(f"Click on, then drag each fry from fryer to bag. ", 
-                  app.width//2, app.height - 200, size=28, fill='yellow', bold=True, align='center')
-    if app.allTrainingFriesInBag:
-        drawLabel(f"Completed Training.", 
-                  app.width//2, app.height - 200, size=28, fill='green', bold=True, align='center')
-        drawButton(app.goToWorkButton, "Go to Work")
-
-def drawButton(rect, label):
-    x, y, w, h = rect
-    drawRect(x, y, w, h, fill='green', border='darkGreen', borderWidth=2)
-    drawLabel(label, x + w//2, y + h//2, size=18, fill='lime', bold=True)
+#----- DRAW HELPERS ----------------------------------------------------------------- 
 
 def drawBasket(app):
     # Draw bubbles
@@ -201,3 +197,14 @@ def hamster_onStep(app):
 
     # Remove offscreen bubbles
     app.bubbles = [b for b in app.bubbles if b[1] > app.height//2 - 350]
+
+
+# HELPER ==================================================
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
+
+def drawButton(rect, label):
+    x, y, w, h = rect
+    drawRect(x, y, w, h, fill='green', border='darkGreen', borderWidth=2)
+    drawLabel(label, x + w//2, y + h//2, size=18, fill='lime', bold=True)

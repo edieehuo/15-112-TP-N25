@@ -31,6 +31,7 @@ class Fry:
         w, h = Fry.fryW, Fry.fryH
         return (self.x - w//2 <= x <= self.x + w//2) and (self.y - h//2 <= y <= self.y + h//2)
 
+#-----------------------------------------------------------------------------------------------------------
 #ACTUAL FRIES 
 def run_onScreenActivate(app):
     app.numFries = random.randint(8, 15)
@@ -75,56 +76,6 @@ def run_onScreenActivate(app):
     app.bubbles = []
     app.stepsPerSecond = 20
 
-
-def run_onMousePress(app, mouseX, mouseY):
-    for i in range(len(app.fries)-1, -1, -1):
-        fry = app.fries[i]
-        if not fry.inBag and fry.containsPoint(mouseX, mouseY):
-            app.draggingIndex = i
-            break
-    if app.allFriesInBag and pointInRect(mouseX, mouseY, app.collectWageButton):
-        app.player.money += app.hamsterMoneyAdd
-        app.log.insert(0, "+$2000 Work")
-        setActiveScreen('decision')
-
-def run_onKeyPress(app, key):
-    if app.allFriesInBag:
-        if key == 'enter' or key == 'space':
-            print('REACHED: run_onKeyPress')
-            app.player.money += app.hamsterMoneyAdd # Increase money by 2 for each run
-            app.log.insert(0,"+$2000 Work")
-            setActiveScreen('decision') 
-    else:
-        pass 
-
-def run_onMouseDrag(app, mouseX, mouseY):
-    if app.draggingIndex is not None:
-        fry = app.fries[app.draggingIndex]
-        fry.x = mouseX
-        fry.y = mouseY
-
-        bagWidth = 200
-        bagHeight = 220
-        bagCenterX = app.width // 2
-        bagCenterY = app.height // 2 + 50
-
-        bagLeft = bagCenterX - bagWidth // 2
-        bagRight = bagCenterX + bagWidth // 2
-        bagTop = bagCenterY - bagHeight // 2
-        bagBottom = bagCenterY + bagHeight // 2
-
-        if (bagLeft < fry.x < bagRight and
-            bagTop < fry.y < bagBottom):
-            fry.inBag = True
-            app.draggingIndex = None
-            # Update allFriesInBag
-            app.allFriesInBag = all(fry.inBag for fry in app.fries)
-        else:
-            app.allFriesInBag = all(fry.inBag for fry in app.fries)
-
-def run_onMouseRelease(app, mouseX, mouseY):
-    app.draggingIndex = None
-
 def run_redrawAll(app):
     # background 
     drawRect(0, 0, app.width, app.height, fill='black')
@@ -150,6 +101,71 @@ def run_redrawAll(app):
     drawLeftBasket(app)
     drawRightBasket(app)
     drawBurger(app)
+
+def run_onMousePress(app, mouseX, mouseY):
+    for i in range(len(app.fries)-1, -1, -1):
+        fry = app.fries[i]
+        if not fry.inBag and fry.containsPoint(mouseX, mouseY):
+            app.draggingIndex = i
+            break
+    if app.allFriesInBag and pointInRect(mouseX, mouseY, app.collectWageButton):
+        app.player.money += app.hamsterMoneyAdd
+        app.log.insert(0, "+$2000 Work")
+        setActiveScreen('decision')
+
+def run_onKeyPress(app, key):
+    if app.allFriesInBag:
+        if key == 'enter' or key == 'space':
+            print('REACHED: run_onKeyPress')
+            app.player.money += app.hamsterMoneyAdd # Increase money by 2 for each run
+            app.log.insert(0,"+$2000 Work")
+            setActiveScreen('decision') 
+    else:
+        pass 
+
+def run_onMouseDrag(app, mouseX, mouseY):
+    if app.draggingIndex is not None:
+        fry = app.fries[app.draggingIndex]
+        #fry.x = mouseX
+        #fry.y = mouseY
+
+        mouseWait=10
+        dx,dy=mouseX-fry.x,mouseY-fry.y
+        if dx>mouseWait:#mouse moving too quickly
+            fry.x+=mouseWait
+        elif dx<-mouseWait:#mouse moving too quickly
+            fry.x-=mouseWait
+        else:
+            fry.x=mouseX
+        if dy>mouseWait:#mouse moving too quickly
+            fry.y+=mouseWait
+        elif dx<-mouseWait:#mouse moving too quickly
+            fry.y-=mouseWait
+        else:
+            fry.y=mouseY
+
+
+        bagWidth = 200
+        bagHeight = 220
+        bagCenterX = app.width // 2
+        bagCenterY = app.height // 2 + 50
+
+        bagLeft = bagCenterX - bagWidth // 2
+        bagRight = bagCenterX + bagWidth // 2
+        bagTop = bagCenterY - bagHeight // 2
+        bagBottom = bagCenterY + bagHeight // 2
+
+        if (bagLeft < fry.x < bagRight and
+            bagTop < fry.y < bagBottom):
+            fry.inBag = True
+            app.draggingIndex = None
+            # Update allFriesInBag
+            app.allFriesInBag = all(fry.inBag for fry in app.fries)
+        else:
+            app.allFriesInBag = all(fry.inBag for fry in app.fries)
+
+def run_onMouseRelease(app, mouseX, mouseY):
+    app.draggingIndex = None
 
 def drawBasket(app):
     bagWidth, bagHeight = 200, 220

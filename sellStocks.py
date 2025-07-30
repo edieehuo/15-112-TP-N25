@@ -67,13 +67,6 @@ def sellStocks_redrawAll(app):
     if app.showHoldings:
         drawHorizontalPortfolio(app)
 
-def drawNothingToSell(app):
-    drawRect(0, 0, app.width, app.height, fill='black')
-    drawLabel("Portfolio is empty.", app.width / 2, app.height / 2 - 30,
-              fill='lime', bold=True, size=20, align='center')
-    drawLabel("You can return to the stock market to buy.", app.width / 2, app.height / 2,
-              fill='white', size=16, align='center')
-    drawButton(app.returnToStocksButton, "Return to Stocks")
 
 def sellStocks_onKeyPress(app, key):
     if len(app.playerPortfolio.stocks) == 0:
@@ -126,6 +119,15 @@ def sellStocks_onMousePress(app, mouseX, mouseY):
         if app.sellStockNum is not None and app.sellAmount > 0:
             sellStocks_onKeyPress(app, 's')
 
+def drawNothingToSell(app):
+    drawRect(0, 0, app.width, app.height, fill='black')
+    drawLabel("Portfolio is empty.", app.width / 2, app.height / 2 - 30,
+              fill='lime', bold=True, size=20, align='center')
+    drawLabel("You can return to the stock market to buy.", app.width / 2, app.height / 2,
+              fill='white', size=16, align='center')
+    drawButton(app.returnToStocksButton, "Return to Stocks")
+
+    
 def drawHorizontalPortfolio(app):
     drawLabel("Your Holdings:", app.width // 2, 420, fill='lime', size=20, bold=True)
     spacingX = 240

@@ -64,10 +64,6 @@ def decision_redrawAll(app):
               fill = 'lime', size=30, bold=True)
     drawBoxes(app)
 
-def drawSmallButton(rect, label):
-    x, y, w, h = rect
-    drawRect(x, y, w, h, fill='darkGreen', border='darkGrey', borderWidth=2, dashes = True)
-    drawLabel(label, x + w//2, y + h//2, size=12, fill='lime', bold=True)
 
 def drawBoxes(app):
     # Draw three boxes 
@@ -113,10 +109,6 @@ def decision_onMousePress(app, mouseX, mouseY):
         setActiveScreen('stocks')
         return
 
-def pointInRect(x, y, rect):
-    rx, ry, rw, rh = rect
-    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
-
 def decision_onKeyPress(app,key): 
     if key == 's':
         app.drawStockInfo = not app.drawStockInfo 
@@ -140,18 +132,30 @@ def drawTips(app):
     drawRect(boxX, boxY, boxWidth, boxHeight, fill='black', border='lime')
 
     tips = [
-        "I hate going",
-         "to work",
-        "No steps taken ",
-        "from checking",
+        "No months lost ",
+        "if checking",
         "investments...",
         "Stock market is",
-        "low(ER)",
-        "risk",
+        "lower risk",
         "gambling.",
+        "I hate going",
+        "to work",
     ]
 
     padding = 15
     for i in range(len(tips)):
         drawLabel(tips[i], boxX + padding, boxY + padding + i*30,
                   size=14, fill='white', align='left', font = 'monospace', bold = True)
+        
+
+#------------------ HELPER ---------------------------------------
+
+def drawSmallButton(rect, label):
+    x, y, w, h = rect
+    drawRect(x, y, w, h, fill='darkGreen', border='darkGrey', borderWidth=2, dashes = True)
+    drawLabel(label, x + w//2, y + h//2, size=12, fill='lime', bold=True)
+
+    
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)

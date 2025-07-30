@@ -78,15 +78,6 @@ def canBuy(app):
         return True
     return False
 
-def drawButton(rect, label):
-    x, y, w, h = rect
-    drawRect(x, y, w, h, fill='green', border='darkGreen', dashes= True, borderWidth=2)
-    drawLabel(label, x + w // 2, y + h // 2, size=14, fill='lime', bold=True)
-
-def pointInRect(x, y, rect):
-    rx, ry, rw, rh = rect
-    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
-
 # Horizontal layout of portfolio holdings
 def drawHorizontalPortfolio(app):
     drawLabel("Your Holdings:", app.width // 2, 420, fill='lime', size=20, bold=True)
@@ -117,3 +108,13 @@ def drawHorizontalPortfolio(app):
             y += 50
 
         i += 1
+
+#--------- HELPER -------------------------------------------------------------------
+def drawButton(rect, label):
+    x, y, w, h = rect
+    drawRect(x, y, w, h, fill='green', border='darkGreen', dashes= True, borderWidth=2)
+    drawLabel(label, x + w // 2, y + h // 2, size=14, fill='lime', bold=True)
+
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)

@@ -15,6 +15,7 @@ class stockInfo:
 
 # Called when stocks screen becomes active
 def stocks_onScreenActivate(app):  
+    app.drawNothingToBuy = False
     # Button sizes
     buttonWidth = 180
     buttonHeight = 40
@@ -51,6 +52,9 @@ def stocks_redrawAll(app):
     drawButton(app.sellButton, "Sell Stocks")
     drawButton(app.returnButton, "Return")
 
+    if app.drawNothingToBuy:
+        drawNothingToBuy(app)
+
 # Draw a single button with label
 def drawButton(rect, label):
     x, y, w, h = rect
@@ -60,8 +64,11 @@ def drawButton(rect, label):
 # Mouse click event handler
 def stocks_onMousePress(app, mouseX, mouseY):
     if pointInRect(mouseX, mouseY, app.buyButton):
-        print('stocksONMOURSEPRES PRESSED')
-        setActiveScreen('buyStocks')
+        if app.player.money >= app.stockPrice :
+            print('stocksONMOURSEPRES PRESSED')
+            setActiveScreen('buyStocks')
+        else: 
+            app.drawNothingToBuy = True 
     elif pointInRect(mouseX, mouseY, app.sellButton):
         print('stocksONMOURSEPRES PRESSED')
         setActiveScreen('sellStocks')
@@ -69,10 +76,8 @@ def stocks_onMousePress(app, mouseX, mouseY):
         app.currDec -= 1
         setActiveScreen('decision')
 
-# Check if point is inside rectangle
-def pointInRect(x, y, rect):
-    rx, ry, rw, rh = rect
-    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)
+def drawNothingToBuy(app):
+    drawLabel('Not enough money to buy.', app.width//2, app.height//2 + 140, fill = 'red', size = 40, bold = True)
 
 def drawMarketPlot(app, boxX, boxY, boxWidth, boxHeight):
     # print('playerHldingTrcker: drawMarketPlot: app.marketCondHistory:', app.marketCondHistory)
@@ -134,8 +139,7 @@ def drawPortfolio(app):
 
     holdX = marketPlotX
     holdY = marketPlotY + marketPlotHeight
-    # print(app.playerPortfolio)
-    # print(app.playerPortfolio.numDiffStocks)
+
     if app.playerPortfolio.numDiffStocks == 0: 
         pass 
     else: 
@@ -179,3 +183,8 @@ def drawPortfolio(app):
                           size = 15)
 
     pass 
+
+# Check if point is inside rectangle
+def pointInRect(x, y, rect):
+    rx, ry, rw, rh = rect
+    return (rx <= x <= rx + rw) and (ry <= y <= ry + rh)

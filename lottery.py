@@ -81,23 +81,6 @@ def lottery_onStep(app):
             app.resultText = getResultText(app, winnings)
             app.showResult = True
 
-def getResultText(app,winnings):
-    if winnings < app.gambledMoney:
-        if winnings == 0:
-            app.log.insert(0,f"-${app.gambledMoney} Gambling")
-            return f"Better luck next time."
-        app.log.insert(0,f"-${winnings} Gambling")
-        return f"Better luck next time."
-    else: 
-        app.log.insert(0,f"+${winnings} Gambling")
-        return f'${winnings} in winnings.'
-
-def spinSpinner(app):
-    app.spinnerSpeed = random.uniform(40, 90)
-    app.spinning = True
-    app.showResult = False
-    app.resultText = ''
-
 def lottery_onKeyPress(app, key):
     if key.isdigit():
         app.gambleInput += key
@@ -144,6 +127,24 @@ def resetApp(app):
     app.wheelX = app.width / 2 
     app.wheelY = app.height / 2 
     app.wheelRad = 160
+
+
+def getResultText(app,winnings):
+    if winnings < app.gambledMoney:
+        if winnings == 0:
+            app.log.insert(0,f"-${app.gambledMoney} Gambling")
+            return f"Better luck next time."
+        app.log.insert(0,f"-${winnings} Gambling")
+        return f"Better luck next time."
+    else: 
+        app.log.insert(0,f"+${winnings} Gambling")
+        return f'${winnings} in winnings.'
+
+def spinSpinner(app):
+    app.spinnerSpeed = random.uniform(40, 90)
+    app.spinning = True
+    app.showResult = False
+    app.resultText = ''
 
 
 
