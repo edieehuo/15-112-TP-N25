@@ -60,8 +60,11 @@ def lottery_redrawAll(app):
 
 def getResultText(app,winnings):
     if winnings < app.gambledMoney:
+        if winnings == 0:
+            app.log.insert(0,f"Lost ${app.gambledMoney} Gambling")
+            return f"Better luck next time."
         app.log.insert(0,f"Lost ${winnings} Gambling")
-        return f'oops, lost ${winnings}'
+        return f"Better luck next time."
     else: 
         app.log.insert(0,f"Made ${winnings} Gambling")
         return f'yay! made ${winnings}'

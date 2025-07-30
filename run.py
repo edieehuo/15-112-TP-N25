@@ -113,18 +113,26 @@ def run_onMouseRelease(app, mouseX, mouseY):
     app.draggingIndex = None
 
 def run_redrawAll(app):
+    # background 
+    drawRect(0, 0, app.width, app.height, fill='black')
+    # tabletop
+    drawRect(0, 0, app.width, app.height / 2, fill='black')  
+    drawLine(0, app.height / 2, app.width, app.height / 2, fill='darkGray', lineWidth=3)
+    drawRect(0, app.height / 2, app.width, app.height / 2, fill='gray', opacity=20)  
+
     for i in range(len(app.fries)):
         fry = app.fries[i]
         fry.draw(isDragging=(i == app.draggingIndex))
     drawBasket(app)
     drawBag(app)
     friesInBag = sum(fry.inBag for fry in app.fries)
-    drawLabel(f"Fries in bag: {friesInBag}/{app.numFries}", app.width/2, 50, size=20, bold=True)
+    drawLabel(f"Fries in bag: {friesInBag}/{app.numFries}", 
+              app.width/2, 80, fill = 'yellow', size=20, bold=True)
     if app.allFriesInBag:
-        drawLabel(f"You put all {app.numFries} fries in the bag!", 
-                  app.width//2, app.height - 120, size=28, fill='green', bold=True, align='center')
-        drawLabel(f"Press Enter or Space to collect wage.", 
-                  app.width//2, app.height - 85, size=28, fill='green', bold=True, align='center')
+        drawLabel(f"You put {app.numFries} fries in the bag.", 
+                  app.width//2, app.height - 200, size=28, fill='green', bold=True, align='center')
+        drawLabel(f"Press Enter or Space to collect your wage.", 
+                  app.width//2, app.height - 150, size=28, fill='green', bold=True, align='center')
 
 
 def drawBasket(app):
@@ -146,6 +154,8 @@ def drawBasket(app):
     oilCenterY = basketCenterY + oilHeight // 2  # Oil is in the lower half
 
     drawRect(basketCenterX, oilCenterY, basketWidth, oilHeight,
+         fill='white', align='center')
+    drawRect(basketCenterX, oilCenterY, basketWidth, oilHeight,
          fill='yellow', opacity=40, align='center')
     for i in range(1, basketHeight, 15):
         drawLine(basketLeft, basketTop + i*0.8, basketLeft + basketWidth, basketTop + i*0.8, opacity = 80, fill = 'lightGrey')
@@ -157,6 +167,17 @@ def drawBag(app):
     bagTop = app.height//2 + 50
     bagWidth = 200
     bagHeight = 220
+
+    #plate 
+    ovalWidth = bagWidth * 1.5  # Oval is 1.5 times the width of the bag
+    ovalHeight = 50  # Set height for the oval (larger to represent a plate)
+    
+    # Position the oval so that it overlaps half with the fries bag
+    ovalX = bagLeft  # Centered horizontally under the bag
+
+    # Draw the oval (plate, shadow, or visual effect)
+    drawOval(ovalX, 618, ovalWidth, ovalHeight, fill='slateGray', border='black', borderWidth = 4)
+
     drawRect(bagLeft, bagTop, bagWidth, bagHeight, 
              fill='red', border='black', borderWidth=4, align = 'center')
     drawLabel(f"Just put the fries", 

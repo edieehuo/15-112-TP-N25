@@ -70,7 +70,8 @@ def start_redrawAll(app):
     drawRect(0,0, app.width, app.height, fill = 'black')
 
     #fonts
-    drawLabel("Baby 2 Billionaire", 
+    #baby 2 billionaire
+    drawLabel("Broke 2 Billions", 
               app.width/2, app.height/2, 
               size=100, bold=True, fill = 'forestGreen')
 

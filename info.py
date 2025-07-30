@@ -7,20 +7,58 @@ def info_onScreenActivate(app):
     pass
 
 def info_redrawAll(app):
-    drawLabel("Information Screen, space for Rules", app.width/2, 20, size=40, bold=True)
+    # background 
+    drawRect(0,0, app.width, app.height, fill = 'black')
+
+    # drawLabel("Information Screen, space for Rules", app.width/2, 20, size=40, bold=True)
+    lineHeight = 30
     if app.drawRules: 
-        drawLabel("Choose carefully- no backsies on each step", app.width/2,app.height/2 - 150)
-        drawLabel("You will be making decisions to reach your money goals", app.width/2, app.height/2 - 120)
-        drawLabel("You can gamble, invest, or work a job at any given step", app.width/2, app.height/2 - 130)
+        ruleCenter = app.height/4 - lineHeight
+        drawLabel("Note:", 
+                  app.width/2, ruleCenter - lineHeight,
+                  fill = 'yellow', size = 30, bold = True)
+        drawLabel("You are a fast food worker who has three options to make money.", 
+                  app.width/2, ruleCenter,
+                  fill = 'grey', size = 24, bold = True)
+        drawLabel("Work quietly at your job, gamble, or invest in the stock market.", 
+                  app.width/2, ruleCenter + lineHeight,
+                  fill = 'grey', size = 24, bold = True)
+        drawLabel("Make your choice carefully at each turn. No redos possible.", 
+                  app.width/2,ruleCenter + 2*lineHeight,
+                  fill = 'grey', size = 24, bold = True)
+        drawLabel("Best of luck.", 
+                  app.width/2,ruleCenter + 3*lineHeight,
+                  fill = 'grey', size = 24, bold = True)
+
+
 
     #Telling player about what they spawned in as
-    drawLabel(f"Welcome to adulting, {app.player.name}.", app.width/2, app.height/2 - 20, size = 30, bold=True)
-    drawLabel(f"Your Current Bank Account: ${app.player.money}", app.width/2, app.height/2 + 10)
-    drawLabel(f"Your Target Amount To Make: ${app.player.moneyGoals}", app.width/2, app.height/2 + 40)
-    drawLabel(f"Number of Years You Have: {app.player.time}", app.width/2, app.height/2 + 70)
+    drawLabel(f"{app.player.name}, life just got real.", 
+              app.width/2, app.height/2 - 80, 
+              fill = 'lime', size = 24, bold = True)
+    drawRect(app.width/2 -150, app.height/2-30, 300,200, fill= None, border = 'yellow')
+    drawLabel(f"You inherited:", 
+              app.width/2, app.height/2, 
+              fill = 'green', size = 24, bold = True)
+    drawLabel(f"${app.player.money}",   
+              app.width/2, app.height/2 + lineHeight, 
+              fill = 'lime', size = 24, bold = True)
+    drawLabel(f"You owe: ",
+              app.width/2, app.height/2 + 2*lineHeight, 
+              fill = 'red', size = 24, bold = True)
+    drawLabel(f"${app.player.moneyGoals}",
+              app.width/2, app.height/2 + 3*lineHeight, 
+              fill = 'red', size = 24, bold = True)
+    drawLabel(f"You have: {app.player.time} months. ", 
+              app.width/2, app.height/2 + 5 + 4*lineHeight,
+              fill = 'red', size = 24, bold = True)
 
-    drawLabel("Hit 'Enter' to Begin Your Journey", app.width/2, app.height/2 + 90, size = 20, bold=True)
-    drawLabel("Hit 'Space' to Read Instructions", app.width/2, app.height/2 + 130, size = 20, bold=True)
+    drawLabel("Hit 'Enter' to Begin Your Journey", 
+              app.width/2, app.height/2 + 20 + 6*lineHeight, 
+              fill = 'yellow', size = 20, bold=True)
+    drawLabel("'Space' For Instructions", 
+              app.width/2, app.height/2 + 20 + 7*lineHeight, 
+              fill = 'forestGreen', size = 20, bold=True)
 
     pass
 
